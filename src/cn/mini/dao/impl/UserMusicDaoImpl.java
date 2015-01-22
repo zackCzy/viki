@@ -25,7 +25,6 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 			q.setString(1, musicName);
 			q.setFirstResult((page - 1) * pageSize);
 			q.setMaxResults(pageSize);	
-			System.out.println(getSession());
 			return q.list();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao:"+e.getMessage(),e);

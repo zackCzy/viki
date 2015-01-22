@@ -1,7 +1,5 @@
 package cn.mini.struts2.action;
 
-import java.io.PrintWriter;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,17 +24,13 @@ public class PublicSearchAction extends ActionSupport implements ServletResponse
 	private String searchName;
 	private int pageIndex,pageSize;
 	public void music(){
-		PrintWriter out=null;
 		if(!searchName.isEmpty()){
 			JSONArray array = JSONArray.fromObject(umsl.Search(searchName, pageIndex,pageSize==0 ? 6:pageSize )); 
 			ActionContext.getContext().put("json",array);
 			try {
-				out=response.getWriter();
-				out.write(array.toString());
+				this.response.getWriter().write(array.toString());
 			} catch (Exception e) {
-				if(out!=null){
-					out.close();
-				}
+				System.out.println(e);
 			}
 		}
 	}
