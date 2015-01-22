@@ -75,7 +75,7 @@ $(function(){
 		}
 	});
 	function keySearch(evt){
-		if(evt.keyCode==undefined||(evt.keyCode!=undefinedevt.keyCode==13||evt.charCode==13)){
+		if(evt.keyCode==undefined||(evt.keyCode!=undefined&&evt.keyCode==13||evt.charCode==13)){
 			window.searchMessage.index=1;
 			if(window.searchFlag===false){
 				window.searchFlag=true;
