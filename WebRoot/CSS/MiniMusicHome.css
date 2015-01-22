@@ -883,6 +883,7 @@ body {
 	background:#FFFFFF;
 	box-shadow: 0 6px 4px rgba(0, 0, 0, 0.05), 0 7px 5px rgba(0, 0, 0, 0.3);
 	z-index: 959;
+	display: none;
 }
 .list_title{
 	width:100%;
@@ -895,16 +896,35 @@ body {
 	text-indent: 2em;
 	font-weight:bold;
 }
+.list_title i{
+	width:28px;
+	height:28px;
+	background-image: url("../images/miniMusic/close.png");
+	display: block;
+	float: right;
+	cursor: pointer;
+}
+.list_title i:hover{
+	background-position: 28px 0;
+}
 .list_ul{
-	list-style:none;
+	zoom:1;
+	width:100%;
+	float: right;
+	height:401px;
+	overflow: auto;
+	overflow-x:hidden;
 }
 .list_ul li{
 	width:100%;
 	height:40px;
 	line-height:40px;
-	text-align: center;
 	font-size:15px;
 	cursor: pointer;
+	text-align:left;
+	text-indent: 2em;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 .list_ul li:hover{
 	background:#4CC1E9;

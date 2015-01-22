@@ -17,26 +17,28 @@
 		<%@include file="../memberJsp/login.html" %>
 		<div style="position: fixed;width:0;height:0;top: 0;background: #c0f;left:400px;">
 			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-			codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"
-			width="0" height="0" id="Externa1">
-			<param name="quality" value="high" />
-			<param value="#FFFFFF" name="bgcolor">
-			<param value="transparent" name="wmode">
-			<param name="allowScriptAccess" value="always" />
-			<param name="movie" value="/myHome/flash/minimusichome.swf" />
-			<param value="userName=zhangwan" name="flashvars">
-			<embed src="/myHome/flash/minimusichome.swf" quality="high"
-				pluginspage="http://www.macromedia.com/go/getflashplayer"
-				type="application/x-shockwave-flash" width="0" height="0"
-				id="Externa" flashvars="userName=zhangwan">
-			</embed>
-		</object>	
+				codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"
+				width="0" height="0" id="Externa1">
+				<param name="quality" value="high" />
+				<param value="#FFFFFF" name="bgcolor">
+				<param value="transparent" name="wmode">
+				<param name="allowScriptAccess" value="always" />
+				<param name="movie" value="/myHome/flash/minimusichome.swf" />
+				<param value="userName=zhangwan" name="flashvars">
+				<embed src="/myHome/flash/minimusichome.swf" quality="high"
+					pluginspage="http://www.macromedia.com/go/getflashplayer"
+					type="application/x-shockwave-flash" width="0" height="0"
+					id="Externa" flashvars="userName=zhangwan">
+				</embed>
+			</object>	
 		</div>
 		<div class="mini_music_box">
-			<span class="list_title">临时列表</span>
-			<ul class="list_ul">
+			<span class="list_title">临时列表
+				<i></i>
+			</span>
+			<ol class="list_ul">
 
-			</ul>	
+			</ol>	
 		</div>
 		<div class="minimusic_nav">
 			 <img alt="viki" src="${pageContext.request.contextPath}/image/vikilogo.png" style="float: left;"/>
@@ -116,7 +118,7 @@
 						<span id="previous_music" title="上一首(Ctrl + ←)"></span>
 						<span id="play_music" title="播放(Ctrl + Enter)" class="play_music"></span>
 						<span id="next_music" title="下一首(Ctrl + →)"></span>
-						<span id="music_list" title="下一首(Ctrl + →)"></span>
+						<span id="music_list" title="歌曲列表"></span>
 					</div>
 				</div>
 			</div>
@@ -155,45 +157,5 @@
 					</div>
 			</div>
 		</div>
-		
-
-		<script type="text/javascript">
-				function playArgs(obj){
-					$Base("#playTime_right").innerHTML(obj.playTime);
-					$Base("#bufferBar").css({width:obj.loadBar+"%"});
-				}
-				function playJd(obj){
-					$Base("#playTime_left").innerHTML(obj.playTime);
-					$Base("#currTimeBar #bar").css({width:(obj.percent<3.3? 3.3:obj.percent)+"%"});
-				}
-		</script>
 	</body>
 </html>
-<!-- <h2>沉默是金-搜索结果</h2>
-					<div class="search_result">
-						<ul>
-							<li>
-								<a class="search_result_li_area_hover" >
-									<span id="search_result_state" ></span>
-									<span class="song_like_ico"></span>
-									<span class="song_append_ico"></span>
-									<span class="song_download_ico"></span>
-								</a>
-								<span class="search_result_state"></span>
-								<span class="search_result_li_area">
-									<span class="search_result_songname">
-										沉默是金
-									</span>
-									<span class="search_result_singername">
-										沉默是金
-									</span>
-								</span>
-							</li>
-							<li>123</li>
-							<li>123</li>
-							<li>123</li>
-							<li>123</li>
-							<li>123</li>
-							<li>123</li>
-						</ul>
-					</div> -->
