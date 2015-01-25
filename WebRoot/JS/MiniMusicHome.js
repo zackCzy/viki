@@ -19,8 +19,7 @@ $(function(){
 	var miniMusic=new MiniMusicBox();
 	var isSginOk=$("input[name='h_userId']").val();
 	window.musicTempArr=$.getCookies('musicMessage');
-	var musicCount=window.musicTempArr==null? 0 : window.musicTempArr.length;
-	for ( var int = 0; int < musicCount; int++) {	
+	for ( var int = 0; int < window.musicTempArr.length; int++) {	
 		(function(initMusicJson){
 			$("<li></li>").attr("alt",initMusicJson.musicId).click(function(event){
 				var _this=getEvtObj(event);
@@ -37,7 +36,7 @@ $(function(){
 			}).append(
 					$("<span class='music_intro'></span>").text(initMusicJson.songerName+"--"+initMusicJson.singername)
 			).append(
-					$("<span class='removeMusic'></span>").click(removeMusic).click(removeCokieMusic)
+					$("<span class='removeMusic'></span>").click(removeMusic).click(removeCokieMusic).attr("alt",initMusicJson.cookieId)
 			).appendTo(".temp");
 		})(JSON.parse(window.musicTempArr[int]));
 	}
@@ -48,14 +47,15 @@ $(function(){
 		var songerName=$(".search_result_songname",$parent).text();
 		var singername=$(".search_result_singername",$parent).text();
 		var _musicTempArr=$.getCookies('musicMessage');
-		var _musicCount=_musicTempArr==null? 0 : _musicTempArr.length;
+		var  cookieId="musicMessage"+new Date().getTime();
 		var strJson=JSON.stringify({
 			"songerName":songerName,
 			"singername":singername,
-			"musicId":musicId
+			"musicId":musicId,
+			"cookieId":cookieId
 		});
-		for ( var int = 0; int < _musicCount; int++) {	
-			if(strJson==_musicTempArr[int]){
+		for ( var int = 0; int < _musicTempArr.length; int++) {	
+			if(musicId==JSON.parse(_musicTempArr[int]).musicId){
 				strJson=null;
 				break;
 			}
@@ -65,7 +65,7 @@ $(function(){
 			return false;
 		}
 		$.notice("Viki 音乐","音乐添加成功！",1500);
-		$.cookie('musicMessage'+(musicCount++),strJson, {expires: 7, path: '/'});
+		$.cookie(cookieId,strJson, {expires: 7, path: '/myHome/music'});
 		$("<li></li>").attr("alt",musicId).click(function(event){
 			event.stopPropagation();
 			var _this=getEvtObj(event);
@@ -81,7 +81,7 @@ $(function(){
 		}).append(
 				$("<span class='music_intro'></span>").text(songerName+"--"+singername)
 		).append(
-				$("<span class='removeMusic'></span>").click(removeCokieMusic)
+				$("<span class='removeMusic'></span>").click(removeCokieMusic).attr("alt",cookieId)
 		).appendTo(".temp");
 	};
 	var addVikiMusic=function (){
@@ -199,7 +199,15 @@ $(function(){
 		});
 	}
 	function removeCokieMusic(){
-		
+		$this=$(this);
+		var cookieId=$this.attr("alt");
+		if($.removeCookie(cookieId,"/myHome/music")){
+			$(this.parentNode).slideUp(300,function(){
+				$(this).remove();
+			});
+		}else{
+			$.notice("VikiMusic 提醒您！","音乐删除失败！");
+		}
 	}
 	function rotate(){
 		$(".singer_photo").addClass("rotate");
