@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.PropertyFilter;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import cn.mini.domain.SearchMusic;
 import cn.mini.domain.UserBase;
 import cn.mini.domain.UserSpaceMusic;
+import cn.mini.domain.VikiMusic;
 import cn.mini.service.UserMusicService;
 import cn.mini.service.UserService;
 
@@ -33,9 +36,17 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 	private UserMusicService umsl=null;
 	@Resource(name="userServiceImpl")
 	private UserService us=null;
-	private String userName;
-	private String searchName;
+	private String userName,musicId,searchName,typeName;
 	private int pageIndex,id,pageSize;
+	public String getMusicId() {
+		return musicId;
+	}
+
+	public void setMusicId(String musicId) {
+		this.musicId = musicId;
+	}
+
+
 	private UserSpaceMusic myMusic;
     private HttpServletResponse response;
 	public String myMusic(){
@@ -76,6 +87,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 			}
 		}
 	}
+
 	public void addInternationMusic() throws IOException{
 		try {
 			int userId=(Integer)ActionContext.getContext().getSession().get("id");
@@ -93,6 +105,48 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 			this.response.getWriter().write("remove music is error");
 		}		
 	}
+	public void addVikiMusic()  throws IOException{
+		try {
+			int userId=(Integer) ActionContext.getContext().getSession().get("id");	
+			if(userId>0){
+				umsl.addVikiMusic(musicId,userId, typeName);
+				this.response.getWriter().write("add vikiMusic is ok");
+			}else{
+				this.response.getWriter().write("no sgin");
+			}
+		} catch (RuntimeException e) {
+			this.response.getWriter().write("add vikiMusic is error");
+		}	
+	}
+	public void getVikiMusic() throws IOException{
+		try {
+			int userId=(Integer) ActionContext.getContext().getSession().get("id");	
+			if(userId>0){
+				List<VikiMusic> vikiMusics=umsl.findVikiMusics(us.findUserService(userId));
+				JsonConfig config=new JsonConfig();
+				config.setJsonPropertyFilter(new PropertyFilter() {		
+					@Override
+					public boolean apply(Object obj, String key, Object arg2) {
+						return (!(key.equals("musicId") || key.equals("song") ||key.equals("singer")||key.equals("sort")||key.equals("special") ||key.equals("sex")||key.equals("area")||key.equals("type")));		
+					}
+				});
+				JSONArray JsonList = JSONArray.fromObject(vikiMusics,config); 
+				this.response.getWriter().write(JsonList.toString());
+			}else{
+				this.response.getWriter().write("no sgin");
+			}
+		} catch (Exception e) {
+			this.response.getWriter().write("get vikiMusic is error");
+		}
+	}
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -140,7 +194,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response=response;
-		
+		this.response.setCharacterEncoding("utf-8");
 	}
 	
 }

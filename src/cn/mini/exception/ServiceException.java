@@ -15,7 +15,13 @@ public class ServiceException extends RuntimeException {
 		// TODO Auto-generated method stub
 		return super.getMessage();
 	}
+	public  ServiceException(String message, Throwable cause) {
+		// TODO Auto-generated method stub
+		super(message, cause);
+	}
+	public  ServiceException() {
 
+	}
 	@Override
 	public String getLocalizedMessage() {
 		// TODO Auto-generated method stub
@@ -69,6 +75,7 @@ public class ServiceException extends RuntimeException {
 		// TODO Auto-generated method stub
 		return super.getStackTrace();
 	}
+	
 
 	@Override
 	public void setStackTrace(StackTraceElement[] stackTrace) {

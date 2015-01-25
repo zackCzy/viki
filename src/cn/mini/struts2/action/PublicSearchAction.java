@@ -24,6 +24,7 @@ public class PublicSearchAction extends ActionSupport implements ServletResponse
 	private String searchName;
 	private int pageIndex,pageSize;
 	public void music(){
+
 		if(!searchName.isEmpty()){
 			JSONArray array = JSONArray.fromObject(umsl.Search(searchName, pageIndex,pageSize==0 ? 6:pageSize )); 
 			ActionContext.getContext().put("json",array);

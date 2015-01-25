@@ -5,14 +5,20 @@ import java.util.List;
 import cn.mini.domain.SearchMusic;
 import cn.mini.domain.UserBase;
 import cn.mini.domain.UserSpaceMusic;
-import cn.mini.exception.DaoException;
+import cn.mini.domain.VikiMusic;
+import cn.mini.exception.ServiceException;
 
 public interface UserMusicService {
-	public List<Object> Search(String musicName,int page,int pageSize) throws RuntimeException;
-	public List<SearchMusic> getUserMusic(UserBase User) throws RuntimeException;
-	public Long selectCount(String musicName) throws RuntimeException;
-	public SearchMusic selectMusic(int id) throws RuntimeException;
-	public void createMusic(int id,int userId) throws RuntimeException;
-	public void createInternationMusic(UserSpaceMusic usm,int userid) throws RuntimeException;
-	public void removeMusic(int id) throws DaoException;
+	public List<Object> Search(String musicName,int page,int pageSize) throws ServiceException;
+	public List<SearchMusic> getUserMusic(UserBase User) throws ServiceException;
+	public Long selectCount(String musicName) throws ServiceException;
+	public SearchMusic selectMusic(int id) throws ServiceException;
+	public SearchMusic selectMusic(String musicId) throws ServiceException;
+	public void createMusic(int id,int userId) throws ServiceException;
+	public void createInternationMusic(UserSpaceMusic usm,int userid) throws ServiceException;
+	public void removeMusic(int id) throws ServiceException;
+	public void addVikiMusic(String musicId,int userid,String typeName) throws ServiceException;
+	public List<VikiMusic> findVikiMusics(UserBase user) throws ServiceException;
+	public VikiMusic findVikiMusic(int vikiId) throws ServiceException;
+	public void removeVikiMusic(int vikiMusicId,int userid) throws ServiceException;
 }

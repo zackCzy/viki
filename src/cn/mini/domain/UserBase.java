@@ -13,7 +13,7 @@ public class UserBase {
 	private List<UserSpaceMusic> userSpaceMusics;
 	private Set<UserBase> followUsers;
 	private Set<UserBase> fansUsers;
-
+	private List<VikiMusic> vkmusics;
 	private List<Comment> comments;
 	private List<Comment> myComments;
 
@@ -26,6 +26,14 @@ public class UserBase {
 	private UnitDatum unitDatums;
 	private SpaceDatum spaceDatums;
 
+
+	public List<VikiMusic> getVkmusics() {
+		return vkmusics;
+	}
+
+	public void setVkmusics(List<VikiMusic> vkmusics) {
+		this.vkmusics = vkmusics;
+	}
 
 	public UnitDatum getUnitDatums() {
 		return unitDatums;
