@@ -17,8 +17,9 @@ public interface UserMusicDao {
 	public UserSpaceMusic selectSpaceMusic(int id) throws DaoException;
 	public void createMusic(UserSpaceMusic usm) throws DaoException;
 	public void removeMusic(UserSpaceMusic usm) throws DaoException;
-	public void addVikiMusic(VikiMusic vm) throws DaoException;
+	public VikiMusic addVikiMusic(VikiMusic vm) throws DaoException;
 	public List<VikiMusic> findVikiMusics(UserBase user) throws DaoException;
+	public VikiMusic findVikiMusic(String musicId,UserBase user) throws DaoException;
 	public VikiMusic findVikiMusic(int id) throws DaoException;
 	public void removeVikiMusic(VikiMusic vm) throws DaoException;
 }

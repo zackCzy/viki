@@ -88,13 +88,13 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 	}
 
 	@Override
-	public void addVikiMusic(VikiMusic vm) throws DaoException {
+	public VikiMusic addVikiMusic(VikiMusic vm) throws DaoException {
 		try {	
 			getSession().save(vm);
+			return vm;
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-addVikiMusic:"+e.getMessage(),e);
 		}
-		
 	}
 
 	@Override
@@ -135,6 +135,20 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 			Query q=getSession().createQuery(hql);
 			q.setString(0, musicId);
 			return (SearchMusic) q.uniqueResult();
+		} catch (Exception e) {
+			throw new DaoException("UserMusicDao-findVikiMusic:"+e.getMessage(),e);
+		}
+	}
+
+	@Override
+	public VikiMusic findVikiMusic(String musicId, UserBase user)
+			throws DaoException {
+		try {
+			String hql="from VikiMusic where musicId = ? and  user=?";
+			Query q=getSession().createQuery(hql);
+			q.setString(0, musicId);
+			q.setParameter(1, user);
+			return (VikiMusic) q.uniqueResult();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-findVikiMusic:"+e.getMessage(),e);
 		}

@@ -15,6 +15,10 @@ public class ServiceException extends RuntimeException {
 		// TODO Auto-generated method stub
 		return super.getMessage();
 	}
+	public ServiceException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
 	public  ServiceException(String message, Throwable cause) {
 		// TODO Auto-generated method stub
 		super(message, cause);

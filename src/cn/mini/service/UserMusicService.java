@@ -17,8 +17,11 @@ public interface UserMusicService {
 	public void createMusic(int id,int userId) throws ServiceException;
 	public void createInternationMusic(UserSpaceMusic usm,int userid) throws ServiceException;
 	public void removeMusic(int id) throws ServiceException;
-	public void addVikiMusic(String musicId,int userid,String typeName) throws ServiceException;
+	public VikiMusic addVikiMusic(String musicId,int userid,String typeName) throws ServiceException;
 	public List<VikiMusic> findVikiMusics(UserBase user) throws ServiceException;
 	public VikiMusic findVikiMusic(int vikiId) throws ServiceException;
-	public void removeVikiMusic(int vikiMusicId,int userid) throws ServiceException;
+	public VikiMusic findVikiMusic(String vikiMusicId,int userid) throws ServiceException;
+	public void removeVikiMusic(int vikiMusicId) throws ServiceException;
+	public void removeVikiMusic(String vikiMusicId,int userid) throws ServiceException;
+	public void removeVikiMusic(int vikiId,int userid) throws ServiceException;
 }

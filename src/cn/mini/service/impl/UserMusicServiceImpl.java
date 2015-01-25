@@ -121,7 +121,7 @@ public class UserMusicServiceImpl implements UserMusicService {
 	}
 
 	@Override
-	public void addVikiMusic(String musicId, int userid,String typeName) throws ServiceException {
+	public VikiMusic addVikiMusic(String musicId, int userid,String typeName) throws ServiceException {
 		try {
 			UserBase user = ud.findUser(userid);
 			SearchMusic smusic=selectMusic(musicId);
@@ -130,6 +130,7 @@ public class UserMusicServiceImpl implements UserMusicService {
 			vm.setUser(user);
 			vm.setTypeName(typeName);
 			umd.addVikiMusic(vm);
+			return vm;
 		} catch (DaoException e) {
 			throw new ServiceException("UserMuseicService-addVikiMusic:", e);
 		} catch (IllegalAccessException e) {
@@ -151,23 +152,6 @@ public class UserMusicServiceImpl implements UserMusicService {
 	}
 
 	@Override
-	public void removeVikiMusic(int vikiMusicId,int userid)
-			throws ServiceException {
-		try {
-			
-			VikiMusic vm=findVikiMusic(vikiMusicId);
-			UserBase tempUser = vm.getUser();
-			if(tempUser.getId()!=userid){
-				throw new ServiceException();
-			}
-			umd.removeVikiMusic(vm);
-		} catch (DaoException e) {
-			throw new ServiceException("UserMuseicService-removeVikiMusic:", e);
-		}
-
-	}
-
-	@Override
 	public VikiMusic findVikiMusic(int vikiId) throws ServiceException {
 		try {
 			return umd.findVikiMusic(vikiId);
@@ -176,5 +160,49 @@ public class UserMusicServiceImpl implements UserMusicService {
 		}
 
 	}
+
+	@Override
+	public void removeVikiMusic(int vikiMusicId) throws ServiceException {
+		try {
+			VikiMusic vm=umd.findVikiMusic(vikiMusicId);
+			umd.removeVikiMusic(vm);
+		} catch (DaoException e) {
+			throw new ServiceException("UserMuseicService-removeVikiMusic:", e);
+		}
+		
+	}
+	@Override
+	public void removeVikiMusic(String vikiMusicId,int userid)
+			throws ServiceException {
+		try {
+			UserBase user=ud.findUser(userid);
+			VikiMusic vm=umd.findVikiMusic(vikiMusicId, user);
+			umd.removeVikiMusic(vm);
+		} catch (DaoException e) {
+			throw new ServiceException("UserMuseicService-removeVikiMusic:", e);
+		}
+	}
+	@Override
+	public void removeVikiMusic(int vikiId,int userid)
+			throws ServiceException {
+		try {
+			UserBase user=ud.findUser(userid);
+			VikiMusic vm=umd.findVikiMusic(vikiId);
+			if(user.getId()==vm.getUser().getId()){
+				umd.removeVikiMusic(vm);
+			}
+		} catch (DaoException e) {
+			throw new ServiceException("UserMuseicService-removeVikiMusic:", e);
+		}
+	}
+
+	@Override
+	public VikiMusic findVikiMusic(String vikiMusicId, int userid)
+			throws ServiceException {
+		UserBase user = ud.findUser(userid);
+		return umd.findVikiMusic(vikiMusicId, user);
+	}
+
+
 
 }

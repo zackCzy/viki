@@ -1,7 +1,6 @@
 package cn.mini.struts2.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,14 +10,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.PropertyFilter;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.springframework.stereotype.Controller;
 
-import cn.mini.domain.SearchMusic;
 import cn.mini.domain.UserBase;
 import cn.mini.domain.UserSpaceMusic;
 import cn.mini.domain.VikiMusic;
+import cn.mini.exception.ServiceException;
 import cn.mini.service.UserMusicService;
 import cn.mini.service.UserService;
 
@@ -53,15 +51,16 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 		try {
 			UserBase user=us.findUserService(id);	
 			List<UserSpaceMusic> usms=user.getUserSpaceMusics();
-			List<SearchMusic> list=new ArrayList<SearchMusic>();
-			for(UserSpaceMusic temp:usms){
-				SearchMusic m=new SearchMusic();
-				BeanUtils.copyProperties(m, temp);
-				list.add(m);
-			}
-			JSONArray array = JSONArray.fromObject(list); 
-			ActionContext.getContext().put("json",array);
-		} catch (Exception e) {
+			JsonConfig config=new JsonConfig();
+			config.setJsonPropertyFilter(new PropertyFilter() {		
+				@Override
+				public boolean apply(Object obj, String key, Object arg2) {
+					return (!(key.equals("musicId") || key.equals("song") ||key.equals("singer")||key.equals("sort")||key.equals("special") ||key.equals("sex")||key.equals("area")||key.equals("type")));		
+				}
+			});
+			JSONArray JsonList = JSONArray.fromObject(usms,config); 		
+			ActionContext.getContext().put("json",JsonList);
+		} catch (ServiceException e) {
 			System.out.println(e);
 		}
 		return "musicList";
@@ -82,7 +81,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 				this.response.getWriter().write("add music is ok"); 
 			} catch (NullPointerException e) {
 				this.response.getWriter().write("add music is error");
-			} catch (RuntimeException e){
+			} catch (ServiceException e){
 				this.response.getWriter().write("add music is error");
 			}
 		}
@@ -93,7 +92,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 			int userId=(Integer)ActionContext.getContext().getSession().get("id");
 			umsl.createInternationMusic(myMusic, userId);
 			this.response.getWriter().write("add music is ok");
-		} catch (RuntimeException e) {
+		} catch (ServiceException e) {
 			this.response.getWriter().write("add music is error");
 		}		
 	}
@@ -101,7 +100,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 		try {		
 			umsl.removeMusic(id);
 			this.response.getWriter().write("remove music is ok");
-		} catch (RuntimeException e) {
+		} catch (ServiceException e) {
 			this.response.getWriter().write("remove music is error");
 		}		
 	}
@@ -109,14 +108,29 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 		try {
 			int userId=(Integer) ActionContext.getContext().getSession().get("id");	
 			if(userId>0){
-				umsl.addVikiMusic(musicId,userId, typeName);
-				this.response.getWriter().write("add vikiMusic is ok");
+				VikiMusic vm=umsl.addVikiMusic(musicId,userId, typeName);
+				int vmId=vm.getId();
+				this.response.getWriter().write(vmId+"");
 			}else{
 				this.response.getWriter().write("no sgin");
 			}
-		} catch (RuntimeException e) {
+		} catch (ServiceException e) {
 			this.response.getWriter().write("add vikiMusic is error");
 		}	
+	}
+	public void removeVikiMusic() throws IOException{
+		try {
+			int userId=(Integer) ActionContext.getContext().getSession().get("id");	
+			if(userId>0){
+				umsl.removeVikiMusic(id, userId);
+				this.response.getWriter().write("remove vikiMusic is ok");
+			}else{
+				this.response.getWriter().write("no sgin");
+			}
+		} catch (ServiceException e) {
+			this.response.getWriter().write("remove vikiMusic is error");
+		}	
+		
 	}
 	public void getVikiMusic() throws IOException{
 		try {
@@ -127,7 +141,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 				config.setJsonPropertyFilter(new PropertyFilter() {		
 					@Override
 					public boolean apply(Object obj, String key, Object arg2) {
-						return (!(key.equals("musicId") || key.equals("song") ||key.equals("singer")||key.equals("sort")||key.equals("special") ||key.equals("sex")||key.equals("area")||key.equals("type")));		
+						return (!((key.equals("id"))||key.equals("musicId") || key.equals("song") ||key.equals("singer")||key.equals("sort")||key.equals("special") ||key.equals("sex")||key.equals("area")||key.equals("type")));		
 					}
 				});
 				JSONArray JsonList = JSONArray.fromObject(vikiMusics,config); 
@@ -135,7 +149,7 @@ public class MusicAction extends ActionSupport implements ServletResponseAware{
 			}else{
 				this.response.getWriter().write("no sgin");
 			}
-		} catch (Exception e) {
+		} catch (ServiceException e) {
 			this.response.getWriter().write("get vikiMusic is error");
 		}
 	}

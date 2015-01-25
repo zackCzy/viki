@@ -35,10 +35,17 @@
 			</object>	
 		</div>
 		<div class="mini_music_box">
-			<span class="list_title">临时列表
+			<span class="list_title">
+				<ul>
+					<li value="0">临时列表</li>
+					<li value="1">Viki列表</li>
+				</ul>
 				<i></i>
 			</span>
-			<ol class="list_ul">
+			<ol class="list_ul temp">
+
+			</ol>	
+			<ol class="list_ul vikiMusic">
 
 			</ol>	
 		</div>
