@@ -132,6 +132,7 @@
 				</div>
 			</div>
 			<div class="mini_music_content_right">
+			<!--  
 				<div style="overflow: auto;height: 100%;width: 100%;">
 					<h2 style="float: left;">华语男歌手</h2>
 					<div class="singer_area">
@@ -168,6 +169,7 @@
 					</div>
 				</div>
 			</div>
+			-->
 		</div>
 	</body>
 </html>
