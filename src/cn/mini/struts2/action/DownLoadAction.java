@@ -64,7 +64,7 @@ public class DownLoadAction extends ActionSupport {
 			stream = up.getTempPhoto().getBinaryStream();
 		} catch (Exception e) {
 			String url = ServletActionContext.getServletContext().getRealPath(
-					"image/userHead.jpg");
+					"images/userGlobal.jpg");
 			System.out.println(url);
 			try {
 				stream = new FileInputStream(url);
@@ -84,7 +84,7 @@ public class DownLoadAction extends ActionSupport {
 			ActionContext.getContext().put("allowCaching", false);
 			if (up==null||up.getSourcePhoto() == null) {
 				String url = ServletActionContext.getServletContext()
-				.getRealPath("image/userHead.jpg");
+				.getRealPath("images/userGlobal.jpg");
 				stream = new FileInputStream(url);
 			} else {
 				stream = up.getSourcePhoto().getBinaryStream();
@@ -105,7 +105,7 @@ public class DownLoadAction extends ActionSupport {
 				stream = up.getBigPhoto().getBinaryStream();
 			} else {
 				String url = ServletActionContext.getServletContext()
-						.getRealPath("image/userHead.jpg");
+						.getRealPath("images/userGlobal.jpg");
 				stream = new FileInputStream(url);
 			}
 		} catch (Exception e) {
@@ -124,7 +124,7 @@ public class DownLoadAction extends ActionSupport {
 				stream = up.getSmallPhoto().getBinaryStream();
 			} else {
 				String url = ServletActionContext.getServletContext()
-						.getRealPath("image/userHead.jpg");
+						.getRealPath("images/userGlobal.jpg");
 				stream = new FileInputStream(url);
 			}
 		} catch (Exception e) {

@@ -22,7 +22,7 @@ public class UnitDatumForm {
 		if(um.getSchoolAddress().length()>50){
 			return false;
 		}
-		if(um.getWorkUnit().length()>50){
+		if(um.getWorkUnit()!=null&&um.getWorkUnit().length()>50){
 			return false;
 		}
 		String [] schoolType={"大学","高中","初中","小学","其他"};
