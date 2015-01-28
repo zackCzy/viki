@@ -20,14 +20,18 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 	public List<UserBase> searchUser(String name, int page, int pageSize)
 			throws DaoException {
 		try {
-			String sql="select * from user_base where id=(select user_id from space_datum where nick_name like ?)";
-			SQLQuery  q=getSession().createSQLQuery(sql).addEntity("user_base",UserBase.class);
-			q.setString(0,"%"+name+"%");
+			String hql="from SpaceDatum where nickName like?";
+			Query q=getSession().createQuery(hql);
+			//String sql="select * from user_base where id=(select user_id from space_datum where nick_name=?)";
+			//SQLQuery  q=getSession().createSQLQuery(sql).addEntity("user_base",UserBase.class);
+			//q.setString(0,name);
+			//Query q=getSession().createQuery("from UserBase where name=?");
+			q.setString(0, "%"+name+"%");
 			q.setFirstResult((page-1)*pageSize);
 			q.setMaxResults(pageSize);
-			return q.list();
+			return q.list(); 
 		} catch (Exception e) {
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchUser:"+e.getMessage(),e);
 		}
 
 	}
@@ -47,7 +51,7 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 			q.setMaxResults(pageSize);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchLog:"+e.getMessage(),e);
 		}
 		
 	}
@@ -68,19 +72,19 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 			q.setMaxResults(pageSize);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchSmallSpeak:"+e.getMessage(),e);
 		}
 		
 	}
 	@Override
 	public BigInteger searchUserCount(String name) throws DaoException {
 		try {
-			String sql="select COUNT(*) from user_base where id=(select user_id from space_datum where nick_name like?)";
+			String sql="select COUNT(*) from space_datum where nick_name like?";
 			SQLQuery  q=getSession().createSQLQuery(sql);
 			q.setString(0,"%"+name+"%");
 			return (BigInteger) q.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchUserCount:"+e.getMessage(),e);
 		}
 
 	}
@@ -98,7 +102,7 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 			return (Long) q.uniqueResult();
 		} catch (Exception e) {
 			
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchLogCount:"+e.getMessage(),e);
 		}
 	}
 	@Override
@@ -114,7 +118,7 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 			q.setBoolean(5, true);
 			return (Long) q.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("SpaceSearchDao:"+e.getMessage(),e);
+			throw new DaoException("SpaceSearchDao-searchSmallSpeakCount:"+e.getMessage(),e);
 		}
 
 	}

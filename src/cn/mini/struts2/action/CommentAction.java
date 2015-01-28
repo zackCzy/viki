@@ -39,7 +39,7 @@ public class CommentAction extends ActionSupport implements ServletResponseAware
 		PrintWriter out=null;
 		try {	
 			out=response.getWriter();
-			 java.sql.Timestamp date=new java.sql.Timestamp(new java.util.Date().getTime());
+			java.sql.Timestamp date=new java.sql.Timestamp(new java.util.Date().getTime());
 			c.setDate(date);	
 			UserBase comUser=isLogin();
 			if(comUser==null){
@@ -86,7 +86,7 @@ public class CommentAction extends ActionSupport implements ServletResponseAware
 		PrintWriter out=null;
 		try {	
 			out=response.getWriter();
-			 java.sql.Timestamp date=new java.sql.Timestamp(new java.util.Date().getTime());
+			java.sql.Timestamp date=new java.sql.Timestamp(new java.util.Date().getTime());
 			rc.setDate(date);	
 			UserBase comUser=isLogin();
 			if(comUser==null){

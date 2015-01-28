@@ -35,6 +35,9 @@ public class AjaxCheckLoginInterceptor extends AbstractInterceptor {
 					if(c.getName().equals("sgin"))sgin=c.getValue();
 					if(c.getName().equals("id"))id=Integer.parseInt(c.getValue()); 
 					if(c.getName().equals("pptoken"))pass=c.getValue();
+					if(sgin!=null&&id!=0&&pass!=null){
+						break;
+					}
 				}
 				if(id==us.sginUserService(sgin, pass)){		
 					ActionContext.getContext().getSession().put("sgin",sgin);

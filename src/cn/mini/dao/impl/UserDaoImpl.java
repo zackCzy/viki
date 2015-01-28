@@ -20,7 +20,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		try {
 			getSession().save(um);
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-registerUser:"+e.getMessage(), e);
 		}			
 	}
 	@Override
@@ -28,7 +28,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		try {			
 			getSession().update(bean);
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-updateUser:"+e.getMessage(), e);
 		}	
 	}
 
@@ -38,7 +38,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		try {
 			getSession().delete(user);
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-removeUser:"+e.getMessage(), e);
 		}	
 	}
 	@Override
@@ -49,7 +49,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			c.add(Restrictions.eq("password", password));
 			return ((UserBase) c.uniqueResult()).getId();
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-sginUser:"+e.getMessage(), e);
 		}			
 	}
 
@@ -63,7 +63,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			if(user.getId()<=0)throw  new DaoException("user exist");
 			return user.getId();
 		} catch (Exception e){
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-selectUser:"+e.getMessage(), e);
 		}	
 	}
 	@Override
@@ -72,7 +72,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			
 			return (UserBase) getSession().get(UserBase.class, id);
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-findUser:"+e.getMessage(), e);
 		}
 	}
 	@Override
@@ -82,7 +82,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			c.add(Restrictions.eq("name",name));
 			return (UserBase) c.uniqueResult();
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-findUser:"+e.getMessage(), e);
 		}
 	}
 	@Override
@@ -92,7 +92,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			c.add(Restrictions.eq("email",email));
 			return c.list();
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-findUserList:"+e.getMessage(), e);
 		}		
 	}
 	@Override
@@ -104,7 +104,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			q.setMaxResults(pageSize);	
 			return q.list();
 		} catch (Exception e) {
-			throw  new DaoException("UserDao:"+e.getMessage(), e);
+			throw  new DaoException("UserDao-findUserAll:"+e.getMessage(), e);
 		}	
 	}
 }
