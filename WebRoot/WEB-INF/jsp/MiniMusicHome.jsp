@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
+<%String path=pageContext.getRequest().getServletContext().getContextPath(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<%String path=pageContext.getRequest().getServletContext().getContextPath(); %>
 		<link type="text/css" rel="stylesheet" href="<%=path %>/CSS/public/main.css">
 		<link type="text/css" rel="stylesheet" href="<%=path %>/CSS/MiniMusicHome.css">	
 		<script type="text/javascript" src="<%=path %>/JS/tool/span.js"></script>
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 		<div class="mini_music_bg">
-			<img src="<%=path %>/images/miniMusic/20120320232937_Pe8XK.thumb.600_0.jpeg" id="music_img_bg"/>
+			<img src="<%=path %>/images/miniMusic/016.jpg" id="music_img_bg"/>
 		</div>
 		<div class="mini_music_component">
 			<div class="mini_music_playArea">
