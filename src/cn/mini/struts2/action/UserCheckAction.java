@@ -163,8 +163,8 @@ public class UserCheckAction extends ActionSupport implements ServletResponseAwa
 				}
 			}
 			MiniMailUtil mini=MiniMailUtil.getInstance();
-			mini.sendMail("请激活你的帐号，完成注册", "亲爱的"+user.getName()+":<br><br>欢迎加入Mini!<br><br>	请点击下面的链接完成注册:<br><br>"+
-					EMAI_URL+"user/check_checkRegister?userId="+user.getId()+"&confirmation="+user.getActive()+"<br><br>如果以上链接无法点击，请将上面的地址复制到你的浏览器(如IE)的地址栏进Mini。<br><br>如果您没有注册过本站账号请不要进行相关操作，以免对您造成损失！"
+			mini.sendMail("请激活你的帐号，完成注册", "亲爱的"+user.getName()+":<br><br>欢迎加入Viki!<br><br>	请点击下面的链接完成注册:<br><br>"+
+					EMAI_URL+"user/check_checkRegister?userId="+user.getId()+"&confirmation="+user.getActive()+"<br><br>如果以上链接无法点击，请将上面的地址复制到你的浏览器(如IE)的地址栏进Viki。<br><br>如果您没有注册过本站账号请不要进行相关操作，以免对您造成损失！"
 							, user.getEmail());
 			
 		} catch (Exception e) {

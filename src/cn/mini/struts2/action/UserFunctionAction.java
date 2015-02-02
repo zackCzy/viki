@@ -39,8 +39,14 @@ public class UserFunctionAction extends ActionSupport {
 	private SportNewService uns = null;
 	private UserLog userlog;
 	private String token;
-	private int newSport,userId,page;
+	private int newSport,userId,page,logId;
 
+	public int getLogId() {
+		return logId;
+	}
+	public void setLogId(int logId) {
+		this.logId = logId;
+	}
 	public String cteateDiary() {
 		ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
 		ActionContext.getContext().put("diary", "saveDiary");
@@ -49,7 +55,7 @@ public class UserFunctionAction extends ActionSupport {
 		return "cteateDiary";
 	}
 	public String modifyDiary() {
-		UserLog ul=uls.getUserLog(userId);
+		UserLog ul=uls.getUserLog(logId);
 		if(ul.getSmallSpeak()){
 			return "my404";
 		}
@@ -61,11 +67,11 @@ public class UserFunctionAction extends ActionSupport {
 		ActionContext.getContext().put("diary", "updateDiary");
 		ActionContext.getContext().put("draft", "updateDraft");
 		ActionContext.getContext().put("log",ul);
-		ActionContext.getContext().put("logid",userId);
+		ActionContext.getContext().put("logid",logId);
 		return "modifyDiary";
 	}
 	public String readDiary() {
-		UserLog ul=uls.getUserLog(userId);
+		UserLog ul=uls.getUserLog(logId);
 		if(ul==null){
 			return "noDiary";
 		}
@@ -85,7 +91,7 @@ public class UserFunctionAction extends ActionSupport {
 			ActionContext.getContext().put("authority",1);	
 		}
 		ActionContext.getContext().put("log",ul);
-		ActionContext.getContext().put("logid",userId);
+		ActionContext.getContext().put("logid",logId);
 		ActionContext.getContext().put("logUser",ul.getUser());
 		ActionContext.getContext().put("visitors",visitors);
 		return "readDiary";
