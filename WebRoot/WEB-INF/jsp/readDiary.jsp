@@ -11,6 +11,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="<%=path%>/CSS/public/main.css">
 		<link rel="stylesheet" type="text/css" href="<%=path%>/CSS/readDiray.css">
+		<script type="text/javascript">
+			BASE_PATH="<%=path %>";
+		</script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/span.js"></script>
 		<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.1.js"></script>
 		<script type="text/javascript" src="<%=path%>/JS/plugObject/notice.js"></script>

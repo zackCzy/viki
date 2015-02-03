@@ -11,6 +11,9 @@
 		<link rel="stylesheet" type="text/css"
 			href="<%=path%>/CSS/public/main.css" />
 		<link rel="stylesheet" type="text/css" href="<%=path%>/CSS/register.css" />
+		<script type="text/javascript">
+			BASE_PATH="<%=path %>";
+		</script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/span.js"></script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/base.js"></script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/plug_Base.js"></script>

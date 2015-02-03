@@ -12,6 +12,9 @@
 		<title>${title}_Viki空间</title>
 		<link rel="stylesheet"  type="text/css" href="<%=path %>/CSS/public/main.css">
 		<link rel="stylesheet"  type="text/css" href="<%=path %>/CSS/board.css">
+		<script type="text/javascript">
+			BASE_PATH="<%=path %>";
+		</script>
 		<script type="text/javascript" src="<%=path %>/JS/tool/span.js"></script>
 		<script type="text/javascript" src="<%=path %>/scripts/jquery-1.10.1.js"></script>
 		<script type="text/javascript" src="<%=path %>/JS/tool/JQ_plugs.js"></script>
