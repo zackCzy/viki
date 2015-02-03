@@ -33,6 +33,7 @@ $(function() {
 	try {
 		$(".sendComment").on("click", sendClick);
 	} catch (e) {}
+	var home_list_displayHeight=$(".home_list_display").height();
 	$(window).scroll(function() {
 		var clientHeight = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
 		var scrollTop = document.documentElement.scrollTop == 0 ? document.body.scrollTop : document.documentElement.scrollTop;
@@ -49,7 +50,18 @@ $(function() {
 				marginTop: "0"
 			});
 		}
-
+		if(scrollTop+home_list_displayHeight-300>$(".home_content_display_wrap").height()){
+			
+		}else if( scrollTop>523){
+			$(".home_list_display").css({
+				top:scrollTop-400
+			});
+		}else{
+			$(".home_list_display").css({
+				position:"absolute",
+				top:"25px"
+			});
+		}
 		if (scrollTop > clientHeight * 2) {
 			$("#returnHead").stop(true).animate({
 				right: "50px"

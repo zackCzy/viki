@@ -225,11 +225,12 @@ public class UserLogDaoImpl extends BaseDao implements UserLogDao {
 	@Override
 	public List<UserLog> getFireVisibelLog(int page,int pageSize) throws DaoException {
 		
-		String hql="from  UserLog as user_log  where draft=? and rubbish=? and smallSpeak=? order by visibleNum desc";				 
+		String hql="from  UserLog as user_log  where draft=? and rubbish=? and smallSpeak=? and visible=? order by visibleNum desc";				 
 		Query q=getSession().createQuery(hql);
 		q.setBoolean(0, false);
 		q.setBoolean(1, false);
 		q.setBoolean(2, false);
+		q.setBoolean(3, true);
 		q.setFirstResult((page - 1) * pageSize);
 		q.setMaxResults(pageSize);
 		try {	
@@ -242,17 +243,35 @@ public class UserLogDaoImpl extends BaseDao implements UserLogDao {
 	@Override
 	public List<UserLog> getConFireLog(int page, int pageSize)
 			throws DaoException {
-		String hql="from UserLog where draft=? and rubbish=? and smallSpeak=? order by commentNum desc";				 
+		String hql="from UserLog where draft=? and rubbish=? and smallSpeak=? and visible=? order by commentNum desc";				 
 		Query q=getSession().createQuery(hql);
 		q.setBoolean(0, false);
 		q.setBoolean(1, false);
 		q.setBoolean(2, false);
+		q.setBoolean(3, true);
 		q.setFirstResult((page - 1) * pageSize);
 		q.setMaxResults(pageSize);
 		try {	
 			return q.list();
 		} catch (Exception e) {
 			throw new DaoException("UserLogDao-getConFireLog:"+e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public List<UserLog> getNewsFireLog(int page, int pageSize) throws DaoException {
+		String hql="from UserLog where draft=? and rubbish=? and smallSpeak=? and visible=? order by modifyDate desc";				 
+		Query q=getSession().createQuery(hql);
+		q.setBoolean(0, false);
+		q.setBoolean(1, false);
+		q.setBoolean(2, false);
+		q.setBoolean(3, true);
+		q.setFirstResult((page - 1) * pageSize);
+		q.setMaxResults(pageSize);
+		try {	
+			return q.list();
+		} catch (Exception e) {
+			throw new DaoException("UserLogDao-getNewsFireLog:"+e.getMessage(), e);
 		}
 	}
 }

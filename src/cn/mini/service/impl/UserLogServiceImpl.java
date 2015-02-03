@@ -152,4 +152,10 @@ public class UserLogServiceImpl implements UserLogService {
 			throws ServiceException {
 		return uld.getConFireLog(page, pageSize);
 	}
+
+	@Override
+	public List<UserLog> getNewsFireLog(int page, int pageSize)
+			throws ServiceException {
+		return uld.getNewsFireLog(page, pageSize);
+	}
 }

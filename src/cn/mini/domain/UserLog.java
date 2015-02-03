@@ -10,14 +10,12 @@ public class UserLog {
 	private Set<UserBase> visitors;
 	private String logName, logContent, type, noHtmlLog;
 	@ColumnDefault("false")
-	private boolean visible=false, draft=false, rubbish=false,smallSpeak=false;
+	private boolean visible=true, draft=false, rubbish=false,smallSpeak=false;
 	private java.sql.Timestamp modifyDate;
 	private int suppot, id;
 	private int commentNum;
 	private int visibleNum;
 	private List<Comment> com;
-
-
 
 	public boolean getSmallSpeak() {
 		return smallSpeak;
@@ -84,7 +82,7 @@ public class UserLog {
 		this.modifyDate = modifyDate;
 	}
 
-	public boolean isVisible() {
+	public boolean getVisible() {
 		return visible;
 	}
 
@@ -92,7 +90,7 @@ public class UserLog {
 		this.visible = visible;
 	}
 
-	public boolean isDraft() {
+	public boolean getDraft() {
 		return draft;
 	}
 

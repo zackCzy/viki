@@ -102,8 +102,10 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				}
 				List<UserLog> hostLogs=uls.getFireVisibelLog(0, 5);
 				List<UserLog> conhostLogs=uls.getConFireLog(0, 5);
+				List<UserLog> newhostLogs=uls.getNewsFireLog(0, 5);
 				ActionContext.getContext().put("hostLogs",hostLogs);
-				ActionContext.getContext().put("conhostLogs",conhostLogs);	
+				ActionContext.getContext().put("conhostLogs",conhostLogs);
+				ActionContext.getContext().put("newhostLogs",newhostLogs);	
 				String verify=verifyPassword(user,"success",spaceAuthority);			
 				if(verify!=null){
 					return verify;

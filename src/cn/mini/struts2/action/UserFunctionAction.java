@@ -109,7 +109,6 @@ public class UserFunctionAction extends ActionSupport {
 			uls.removeUserLog(userId);
 			out.write("removeDiary is ok");
 		} catch (Exception e) {
-			System.out.println(e);
 			if(out!=null){
 				out.write("removeDiary is error");
 			}
@@ -318,7 +317,6 @@ public class UserFunctionAction extends ActionSupport {
 			JSONArray array = JSONArray.fromObject(logListt,config); 
 			out.write(array.toString());	
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return;
 		}finally{
 			if(out!=null){

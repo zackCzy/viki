@@ -50,4 +50,5 @@ public interface UserLogService {
 	public void updateLogVisitors(UserLog userlog) throws ServiceException;
 	public  List<UserLog> getFireVisibelLog(int page,int pageSize) throws ServiceException;
 	public List<UserLog> getConFireLog(int page,int pageSize) throws ServiceException;
+	public List<UserLog> getNewsFireLog(int page,int pageSize) throws ServiceException;
 }

@@ -310,6 +310,7 @@ h4{
 	line-height:50px;
 	font-size:17px;
 	margin:0;
+	color:#48525E;
 }
 .logList_right ul{
 	list-style: none;
@@ -323,6 +324,25 @@ h4{
 	height:30px;
 	line-height:40px;
 	border-bottom:1px solid #ececec;
+	cursor:pointer;
+	overflow: hidden;
+}
+.logList_right li:hover{
+	border-left:8px solid #4CC1E9;
+	border-bottom:0 none;
+}
+.logList_right li a,.logList_right li a:VISITED,.logList_right li a:ACTIVE{
+	color:#787878;
+	text-decoration:none;
+	width:250px;
+	display: block;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.logList_right li a:HOVER{
+	color:#423009;
+	background: #ececec;
 }
 .user_page_photo li strong {
 	width: 60px;
