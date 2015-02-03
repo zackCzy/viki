@@ -12,6 +12,7 @@ import cn.mini.dao.UserLogDao;
 import cn.mini.domain.UserBase;
 import cn.mini.domain.UserLog;
 import cn.mini.exception.DaoException;
+import cn.mini.exception.ServiceException;
 import cn.mini.exception.UserServiceException;
 import cn.mini.service.UserLogService;
 
@@ -53,6 +54,10 @@ public class UserLogServiceImpl implements UserLogService {
 		UserBase us = ud.findUser(id);
 		userlog.setUser(us);
 		userlog.setModifyDate(new java.sql.Timestamp(new java.util.Date().getTime()));
+		uld.updateLog(userlog);
+	}
+	@Override
+	public void updateLogVisitors(UserLog userlog) throws RuntimeException {
 		uld.updateLog(userlog);
 	}
 	@Override
@@ -134,5 +139,17 @@ public class UserLogServiceImpl implements UserLogService {
 	public Long getSpeakDateCount(UserBase user, Timestamp date)
 			throws DaoException {
 		return uld.getSpeakDateCount(user, date);
+	}
+
+	@Override
+	public List<UserLog> getFireVisibelLog(int page, int pageSize)
+			throws ServiceException {
+		return uld.getFireVisibelLog(page, pageSize);
+	}
+
+	@Override
+	public List<UserLog> getConFireLog(int page, int pageSize)
+			throws ServiceException {
+		return uld.getConFireLog(page, pageSize);
 	}
 }

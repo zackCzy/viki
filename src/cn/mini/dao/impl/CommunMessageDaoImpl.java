@@ -23,7 +23,7 @@ public class CommunMessageDaoImpl extends BaseDao implements CommunMessageDao  {
 			q.setMaxResults(pageSize);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("CommunMessageDao:"+e.getMessage(),e);
+			throw new DaoException("CommunMessageDao-getPageCommunMessage:"+e.getMessage(),e);
 		}
 	}
 

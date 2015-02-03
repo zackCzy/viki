@@ -18,7 +18,7 @@ public class SingerPhotoDaoImpl extends BaseDao implements SingerPhotoDao {
 		try {
 			return (SingerPhoto) getSession().get(SingerPhoto.class, id);
 		} catch (Exception e) {
-			throw new DaoException("SingerPhotoDao"+e.getMessage(),e);
+			throw new DaoException("SingerPhotoDao-getSingerPhoto"+e.getMessage(),e);
 		}
 	}
 
@@ -29,7 +29,7 @@ public class SingerPhotoDaoImpl extends BaseDao implements SingerPhotoDao {
 			c.add(Restrictions.eq("singerName", name));		
 			return (SingerPhoto) c.list().get(0);
 		} catch (Exception e) {
-			throw new DaoException("SingerPhotoDao"+e.getMessage(),e);
+			throw new DaoException("SingerPhotoDao-getSingerPhoto"+e.getMessage(),e);
 		}
 	}
 

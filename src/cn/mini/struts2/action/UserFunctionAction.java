@@ -84,7 +84,7 @@ public class UserFunctionAction extends ActionSupport {
 		if(caller>0&&caller!=ul.getUser().getId()){				
 			if(visitors.add(us.findUserService(caller))){
 				ul.setVisibleNum(ul.getVisibleNum()+1);
-				uls.updateLog(ul);
+				uls.updateLogVisitors(ul);
 			}
 			ActionContext.getContext().put("authority",0);	
 		}else{

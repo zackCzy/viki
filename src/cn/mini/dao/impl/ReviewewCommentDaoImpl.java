@@ -20,7 +20,7 @@ public class ReviewewCommentDaoImpl extends BaseDao implements ReviewewCommentDa
 		try {
 			getSession().save(com);
 		} catch (Exception e) {
-			throw new DaoException("ReviewewCommentDao:"+e.getMessage(), e);
+			throw new DaoException("ReviewewCommentDao-saveReviewewCom:"+e.getMessage(), e);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class ReviewewCommentDaoImpl extends BaseDao implements ReviewewCommentDa
 				getSession().delete(c);
 			}	
 		} catch (Exception e) {
-			throw new DaoException("ReviewewCommentDao:"+e.getMessage(), e);
+			throw new DaoException("ReviewewCommentDao-removeReviewewCom:"+e.getMessage(), e);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class ReviewewCommentDaoImpl extends BaseDao implements ReviewewCommentDa
 			q.setParameter(0, com);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("ReviewewCommentDao:"+e.getMessage(), e);
+			throw new DaoException("ReviewewCommentDao-getReviewewCom:"+e.getMessage(), e);
 		}
 	}
 

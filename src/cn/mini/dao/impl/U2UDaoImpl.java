@@ -20,7 +20,7 @@ public class U2UDaoImpl extends BaseDao implements U2UDao {
 			UserBase user=(UserBase) getSession().get(UserBase.class, id);
 			return user.getFollowUsers();
 		} catch (Exception e) {
-			throw new  DaoException("U2UDao:"+e.getMessage(),e);
+			throw new  DaoException("U2UDao-findFriends:"+e.getMessage(),e);
 		}
 		
 	}
@@ -33,7 +33,7 @@ public class U2UDaoImpl extends BaseDao implements U2UDao {
 			UserBase user=(UserBase) c.uniqueResult();
 			return user.getFollowUsers();
 		} catch (Exception e) {
-			throw new  DaoException("U2UDao:"+e.getMessage(),e);
+			throw new  DaoException("U2UDao-findFriends:"+e.getMessage(),e);
 		}
 	}
 
@@ -42,7 +42,7 @@ public class U2UDaoImpl extends BaseDao implements U2UDao {
 		try {
 			getSession().update(user);
 		} catch (Exception e) {
-			throw new  DaoException("U2UDao:"+e.getMessage(),e);
+			throw new  DaoException("U2UDao-addFriends:"+e.getMessage(),e);
 		}
 	}
 
@@ -51,7 +51,7 @@ public class U2UDaoImpl extends BaseDao implements U2UDao {
 		try {
 			getSession().update(user);
 		} catch (Exception e) {
-			throw new  DaoException("U2UDao:"+e.getMessage(),e);
+			throw new  DaoException("U2UDao-removeFollow:"+e.getMessage(),e);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class U2UDaoImpl extends BaseDao implements U2UDao {
 		try {
 			getSession().update(user);
 		} catch (Exception e) {
-			throw new  DaoException("U2UDao:"+e.getMessage(),e);
+			throw new  DaoException("U2UDao-removeFriend:"+e.getMessage(),e);
 		}
 	}	
 }

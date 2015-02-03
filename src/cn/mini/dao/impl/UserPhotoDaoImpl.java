@@ -24,7 +24,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 			getSession().save(up);	
 			return up.getId();
 		} catch (Exception e) {		
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-UserPhotoDaoImpl:"+e.getMessage(),e);
 		}
 	}
 
@@ -33,7 +33,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 		try {		
 			return  (UserPhoto) getSession().get(UserPhoto.class, id);
 		} catch (Exception e) {
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-getUserPhoto:"+e.getMessage(),e);
 		}
 	}
 	@Override
@@ -41,7 +41,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 		try {
 			getSession().delete(up);
 		} catch (Exception e) {
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-removeUserPhoto:"+e.getMessage(),e);
 		}
 
 	}
@@ -53,7 +53,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 			getSession().update(up);
 			return up.getId();
 		} catch (Exception e) {
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-updateTempUserPhoto:"+e.getMessage(),e);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 			up.setSourcePhoto(up.getTempPhoto());
 			getSession().update(up);
 		} catch (Exception e) {
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-saveUserPhoto:"+e.getMessage(),e);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class UserPhotoDaoImpl extends BaseDao implements UserPhotoDao {
 			c.add(Restrictions.eq("user",user));		
 			return (UserPhoto) c.uniqueResult();
 		} catch (Exception e) {
-			throw new RuntimeException("UserPhotoDao:"+e.getMessage(),e);
+			throw new RuntimeException("UserPhotoDao-getUserPhoto:"+e.getMessage(),e);
 		}
 	}
 }

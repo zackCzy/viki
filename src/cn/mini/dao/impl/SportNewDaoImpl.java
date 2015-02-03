@@ -33,7 +33,7 @@ public class SportNewDaoImpl extends BaseDao implements SportNewDao {
 			hqlSetem.setMaxResults(pageSize);	
 			return hqlSetem.list();
 		} catch (Exception e) {
-			throw new DaoException("SportNewDao:"+e.getMessage(),e);
+			throw new DaoException("SportNewDao-getSpacsSportNewDao:"+e.getMessage(),e);
 		}
 	}
 

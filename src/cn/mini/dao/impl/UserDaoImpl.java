@@ -107,4 +107,5 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			throw  new DaoException("UserDao-findUserAll:"+e.getMessage(), e);
 		}	
 	}
+
 }

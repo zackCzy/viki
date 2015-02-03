@@ -100,11 +100,16 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				} catch (Exception e) {
 					spaceAuthority=false;
 				}
+				List<UserLog> hostLogs=uls.getFireVisibelLog(0, 5);
+				List<UserLog> conhostLogs=uls.getConFireLog(0, 5);
+				ActionContext.getContext().put("hostLogs",hostLogs);
+				ActionContext.getContext().put("conhostLogs",conhostLogs);	
 				String verify=verifyPassword(user,"success",spaceAuthority);			
 				if(verify!=null){
 					return verify;
 				}
 				ActionContext.getContext().put("authority",spaceAuthority ? 1:0);
+				
 				if(spaceAuthority){
 					ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
 					ActionContext.getContext().put("type",2);

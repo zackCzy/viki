@@ -23,7 +23,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 			c.add(Restrictions.eq("user",user));		
 			return (SpaceDatum) c.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 			c.add(Restrictions.eq("user",user));		
 			return (UserBaseDails) c.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}
 	}
 
@@ -45,7 +45,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 			c.add(Restrictions.eq("user",user));		
 			return (UserBaseDatum) c.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 			c.add(Restrictions.eq("user",user));		
 			return (UnitDatum) c.uniqueResult();
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}
 	}
 
@@ -65,7 +65,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().save(sd);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}	
 	}
 
@@ -74,7 +74,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().save(ubd);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}	
 	}
 
@@ -83,7 +83,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().save(ubd);
 		} catch (Exception e) {
-			throw new DaoException(e.getMessage(),e);
+			throw new DaoException("UserDatumDao-saveUserBaseDatum:"+e.getMessage(),e);
 		}	
 		
 	}
@@ -93,7 +93,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().save(ud);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-getSpaceDatum:"+e.getMessage(),e);
 		}	
 		
 	}
@@ -103,7 +103,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().update(sd);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-updateSpaceDatum:"+e.getMessage(),e);
 		}			
 	}
 
@@ -112,7 +112,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().update(ubd);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-updateUserBaseDails:"+e.getMessage(),e);
 		}		
 	}
 
@@ -121,7 +121,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().update(ubd);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-updateUserBaseDatum:"+e.getMessage(),e);
 		}			
 	}
 
@@ -130,7 +130,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 		try {
 			getSession().update(ud);
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-updateUnitDatum:"+e.getMessage(),e);
 		}				
 	}
 
@@ -141,7 +141,7 @@ public class UserDatumDaoImpl extends BaseDao implements UserDatumDao {
 			c.add(Restrictions.eq("email", email));
 			return ((UserBase)c.uniqueResult());
 		} catch (Exception e) {
-			throw new DaoException("UserDatumDao:"+e.getMessage(),e);
+			throw new DaoException("UserDatumDao-exitsEmail:"+e.getMessage(),e);
 		}	
 	}
 

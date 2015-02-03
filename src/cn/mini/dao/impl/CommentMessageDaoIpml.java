@@ -24,7 +24,7 @@ public class CommentMessageDaoIpml extends BaseDao implements CommentMessageDao 
 			q.setMaxResults(pageSize);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("CommentMessageDao:"+e.getMessage(),e);
+			throw new DaoException("CommentMessageDao-getPageCommentMessage:"+e.getMessage(),e);
 		}
 	}
 }

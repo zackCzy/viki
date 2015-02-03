@@ -22,4 +22,6 @@ public interface UserLogDao {
 	public Long getCount(UserBase user)  throws DaoException;
 	public Long getSpeakCount(UserBase user)  throws DaoException;
 	public Long getSpeakDateCount(UserBase user,java.sql.Timestamp date)  throws DaoException;
+	public List<UserLog> getFireVisibelLog(int page,int pageSize) throws DaoException;
+	public List<UserLog> getConFireLog(int page,int pageSize) throws DaoException;
 }

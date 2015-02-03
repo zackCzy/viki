@@ -20,7 +20,7 @@ public class LogCommentDaoImpl extends BaseDao implements LogCommentDao {
 		try {
 			getSession().save(com);
 		} catch (Exception e) {
-			throw new DaoException("LogCommentDao:"+e.getMessage(), e);
+			throw new DaoException("LogCommentDao-LogCommentDaoImpl:"+e.getMessage(), e);
 		}
 	}
 
@@ -36,7 +36,7 @@ public class LogCommentDaoImpl extends BaseDao implements LogCommentDao {
 			getSession().update(ul);
 			getSession().delete(c);
 		} catch (Exception e) {
-			throw new DaoException("LogCommentDao:"+e.getMessage(), e);
+			throw new DaoException("LogCommentDao-removeLogCom:"+e.getMessage(), e);
 		}
 	}
 
@@ -50,7 +50,7 @@ public class LogCommentDaoImpl extends BaseDao implements LogCommentDao {
 			q.setParameter(0, ul);
 			return q.list();
 		} catch (Exception e) {
-			throw new DaoException("LogCommentDao:"+e.getMessage(), e);
+			throw new DaoException("LogCommentDao-getLogCom:"+e.getMessage(), e);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class LogCommentDaoImpl extends BaseDao implements LogCommentDao {
 		try {
 			return (Comment) getSession().get(Comment.class, id);
 		} catch (Exception e) {
-			throw new DaoException("LogCommentDao:"+e.getMessage(), e);
+			throw new DaoException("LogCommentDao-getComment:"+e.getMessage(), e);
 		}
 	}
 

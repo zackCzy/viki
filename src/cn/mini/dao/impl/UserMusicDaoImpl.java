@@ -19,13 +19,13 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 	@Override
 	public List<Object> Search(String musicName, int page, int pageSize)
 			throws DaoException {
+		String hql = "from SearchMusic where song like ? or singer=?";
+		Query q = getSession().createQuery(hql);
+		q.setString(0, "%" + musicName + "%");
+		q.setString(1, musicName);
+		q.setFirstResult((page - 1) * pageSize);
+		q.setMaxResults(pageSize);	
 		try {
-			String hql = "from SearchMusic where song like ? or singer=?";
-			Query q = getSession().createQuery(hql);
-			q.setString(0, "%" + musicName + "%");
-			q.setString(1, musicName);
-			q.setFirstResult((page - 1) * pageSize);
-			q.setMaxResults(pageSize);	
 			return q.list();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-Search:"+e.getMessage(),e);
@@ -40,11 +40,11 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 
 	@Override
 	public Long selectCount(String musicName) throws DaoException {
+		String hql = "SELECT COUNT(*) from SearchMusic where song like ? or singer=?";
+		Query q = getSession().createQuery(hql);
+		q.setString(0, "%" + musicName + "%");
+		q.setString(1, musicName);	
 		try {
-			String hql = "SELECT COUNT(*) from SearchMusic where song like ? or singer=?";
-			Query q = getSession().createQuery(hql);
-			q.setString(0, "%" + musicName + "%");
-			q.setString(1, musicName);	
 			return (Long) q.list().get(0);
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-selectCount:"+e.getMessage(),e);
@@ -99,10 +99,10 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 
 	@Override
 	public List<VikiMusic> findVikiMusics(UserBase user) throws DaoException {
+		String hql="from VikiMusic where user =?";
+		Query q = getSession().createQuery(hql);
+		q.setParameter(0, user);
 		try {	
-			String hql="from VikiMusic where user =?";
-			Query q = getSession().createQuery(hql);
-			q.setParameter(0, user);
 			return q.list();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-findVikiMusics:"+e.getMessage(),e);
@@ -130,10 +130,10 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 
 	@Override
 	public SearchMusic selectMusic(String musicId) throws DaoException {
+		String hql="from SearchMusic where musicId = ?";
+		Query q=getSession().createQuery(hql);
+		q.setString(0, musicId);
 		try {
-			String hql="from SearchMusic where musicId = ?";
-			Query q=getSession().createQuery(hql);
-			q.setString(0, musicId);
 			return (SearchMusic) q.uniqueResult();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-findVikiMusic:"+e.getMessage(),e);
@@ -143,11 +143,11 @@ public class UserMusicDaoImpl extends BaseDao implements UserMusicDao {
 	@Override
 	public VikiMusic findVikiMusic(String musicId, UserBase user)
 			throws DaoException {
+		String hql="from VikiMusic where musicId = ? and  user=?";
+		Query q=getSession().createQuery(hql);
+		q.setString(0, musicId);
+		q.setParameter(1, user);
 		try {
-			String hql="from VikiMusic where musicId = ? and  user=?";
-			Query q=getSession().createQuery(hql);
-			q.setString(0, musicId);
-			q.setParameter(1, user);
 			return (VikiMusic) q.uniqueResult();
 		} catch (Exception e) {
 			throw new DaoException("UserMusicDao-findVikiMusic:"+e.getMessage(),e);

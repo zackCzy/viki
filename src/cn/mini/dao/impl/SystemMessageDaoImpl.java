@@ -20,7 +20,7 @@ public class SystemMessageDaoImpl extends BaseDao implements SystemMessageDao {
 		try {
 			getSession().save(sm);
 		} catch (Exception e) {
-			throw new DaoException("SystemMessageDao:"+e.getMessage(),e);
+			throw new DaoException("SystemMessageDao-addSystemMessage:"+e.getMessage(),e);
 		}
 	}
 
@@ -32,7 +32,7 @@ public class SystemMessageDaoImpl extends BaseDao implements SystemMessageDao {
 			c.add(Restrictions.eq("user", user));
 			return c.list();
 		} catch (Exception e) {
-			throw new DaoException("SystemMessageDao:"+e.getMessage(),e);
+			throw new DaoException("SystemMessageDao-findSystemMessage:"+e.getMessage(),e);
 		}
 	}
 
@@ -41,7 +41,7 @@ public class SystemMessageDaoImpl extends BaseDao implements SystemMessageDao {
 		try {
 			return (SystemMessage) getSession().get(SystemMessage.class, id);
 		} catch (Exception e) {
-			throw new DaoException("SystemMessageDao:"+e.getMessage(),e);
+			throw new DaoException("SystemMessageDao-findSystemMessage:"+e.getMessage(),e);
 		}
 	}
 

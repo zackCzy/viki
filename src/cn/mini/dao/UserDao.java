@@ -23,4 +23,6 @@ public interface UserDao{
 	public  List<UserBase> findUserList(String name) throws DaoException;
 
 	public  List<UserBase> findUserAll(int page,int pageSize) throws DaoException;
+
+
 }

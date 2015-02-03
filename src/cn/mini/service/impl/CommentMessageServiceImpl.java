@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cn.mini.dao.CommentMessageDao;
 import cn.mini.domain.UserBase;
+import cn.mini.exception.ServiceException;
 import cn.mini.service.CommentMessageService;
 @Service("commentMessageServiceImpl")
 public class CommentMessageServiceImpl implements CommentMessageService {
@@ -17,8 +18,13 @@ public class CommentMessageServiceImpl implements CommentMessageService {
 	
 	@Override
 	public List<?> getPageCommentMessage(UserBase user, int page, int pageSize)
-			throws RuntimeException {	
-		return cmd.getPageCommentMessage(user, page, pageSize);
+			throws ServiceException {
+		try {
+			return cmd.getPageCommentMessage(user, page, pageSize);
+		} catch (Exception e) {
+			throw new ServiceException("CommentMessageService-getPageCommentMessage:"+e.getMessage(),e);
+		}
+		
 	}
 
 }
