@@ -76,7 +76,6 @@ public class UserFunctionAction extends ActionSupport {
 			return "noDiary";
 		}
 		if(ul.getSmallSpeak()){
-
 			return "my404";
 		}
 		int caller=(Integer) ActionContext.getContext().getSession().get("id");
@@ -123,13 +122,13 @@ public class UserFunctionAction extends ActionSupport {
 		PrintWriter out=null;
 		try {
 			int userID=(Integer) ActionContext.getContext().getSession().get("id");
-			UserLog userlog=uls.getUserLog(userId);
+			UserLog userlog=uls.getUserLog(logId);
 			out=ServletActionContext.getResponse().getWriter();
 			if(userlog.getUser().getId()!=userID){
 				out.write("removeRubbish user log error");
 				return;
 			}
-			uls.removeRubbishUserLog(userId);
+			uls.removeRubbishUserLog(logId);
 			out.write("removeRubbish user log ok");
 		} catch (Exception e) {
 			if(out!=null){
@@ -145,13 +144,13 @@ public class UserFunctionAction extends ActionSupport {
 		PrintWriter out=null;
 		try {
 			int userID=(Integer) ActionContext.getContext().getSession().get("id");
-			UserLog userlog=uls.getUserLog(userId);
+			UserLog userlog=uls.getUserLog(logId);
 			out=ServletActionContext.getResponse().getWriter();
 			if(userlog.getUser().getId()!=userID){
 				out.write("removeDraft user log error");
 				return;
 			}
-			uls.removeUserLog(userId);
+			uls.removeUserLog(logId);
 			out.write("removeDraft user log ok");
 		} catch (Exception e) {
 			if(out!=null){
@@ -167,13 +166,13 @@ public class UserFunctionAction extends ActionSupport {
 		PrintWriter out=null;
 		try {
 			int userID=(Integer) ActionContext.getContext().getSession().get("id");
-			UserLog userlog=uls.getUserLog(userId);
+			UserLog userlog=uls.getUserLog(logId);
 			out=ServletActionContext.getResponse().getWriter();
 			if(userlog.getUser().getId()!=userID){
 				out.write("recoveryRubbish user log error");
 				return;
 			}
-			uls.recoveryRubbishUserLog(userId);
+			uls.recoveryRubbishUserLog(logId);
 			out.write("recoveryRubbish user log ok");
 		} catch (Exception e) {
 			if(out!=null){
@@ -196,12 +195,12 @@ public class UserFunctionAction extends ActionSupport {
 					return;
 				}
 				String setoken = (String) ActionContext.getContext().getSession().get("token");
-				ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
-				out=ServletActionContext.getResponse().getWriter();
 				if (!token.equals(setoken)) {
 					out.write("save user log error");
 					return;
 				}
+				ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+				out=ServletActionContext.getResponse().getWriter();
 				this.handleUserLog();
 			} catch (Exception e) {
 				if(out!=null){
@@ -229,9 +228,15 @@ public class UserFunctionAction extends ActionSupport {
 	public void updateDiary() {
 		UserLogHandle ulh=new UserLogHandle(){
 			public void handleUserLog() throws RuntimeException {
-				ActionContext.getContext().getSession().remove("token");
-				userlog.setDraft(false);
-				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), userlog);
+				ActionContext.getContext().getSession().remove("token");	
+				UserLog reUserLog=uls.getUserLog(userlog.getId());
+				reUserLog.setLogName(userlog.getLogName());
+				reUserLog.setLogContent(userlog.getLogContent());
+				reUserLog.setVisible(userlog.getVisible());
+				reUserLog.setType(userlog.getType());
+				reUserLog.setDraft(false);
+				reUserLog.setNoHtmlLog(userlog.getNoHtmlLog());
+				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), reUserLog);
 				super.out.write("save user log ok");
 			}	
 		};
@@ -253,8 +258,14 @@ public class UserFunctionAction extends ActionSupport {
 		UserLogHandle ulh=new UserLogHandle(){
 			public void handleUserLog() throws RuntimeException {
 				ActionContext.getContext().getSession().remove("token");
-				userlog.setDraft(true);
-				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), userlog);
+				UserLog reUserLog=uls.getUserLog(userlog.getId());
+				reUserLog.setLogName(userlog.getLogName());
+				reUserLog.setLogContent(userlog.getLogContent());
+				reUserLog.setVisible(userlog.getVisible());
+				reUserLog.setType(userlog.getType());
+				reUserLog.setDraft(true);
+				reUserLog.setNoHtmlLog(userlog.getNoHtmlLog());
+				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), reUserLog);
 				super.out.write("save user log ok");
 			}
 		};

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import cn.mini.domain.Comment;
 import cn.mini.domain.ReviewewComment;
 import cn.mini.domain.UserBase;
+import cn.mini.domain.UserLog;
 import cn.mini.service.LogCommentService;
 import cn.mini.service.ReviewewCommentService;
 import cn.mini.service.UserService;
@@ -95,6 +96,7 @@ public class CommentAction extends ActionSupport implements ServletResponseAware
 			}
 			UserBase user=us.findUserService(userId);
 			Comment com=lcs.getComment(commentID);
+			
 			rc.setComUser(comUser);
 			rc.setUser(user);	
 			rc.setComment(com);

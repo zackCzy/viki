@@ -24,14 +24,13 @@ public class UserLogServiceImpl implements UserLogService {
 	private UserDao ud = null;
 
 	@Override
-	public void saveLog(UserLog user, int id) throws RuntimeException {
+	public void saveLog(UserLog userLog, int id) throws RuntimeException {
 		if (id <= 0)
 			throw new UserServiceException("user login has expired");
 		UserBase us = ud.findUser(id);
-
-		user.setModifyDate(new java.sql.Timestamp(new java.util.Date().getTime()));
-		user.setUser(us);
-		uld.saveLog(user);
+		userLog.setModifyDate(new java.sql.Timestamp(new java.util.Date().getTime()));
+		userLog.setUser(us);
+		uld.saveLog(userLog);
 	}
 
 	@Override
@@ -51,8 +50,6 @@ public class UserLogServiceImpl implements UserLogService {
 	public void updateLog(int id, UserLog userlog) throws RuntimeException {
 		if (id <= 0)
 			throw new UserServiceException("user login has expired");
-		UserBase us = ud.findUser(id);
-		userlog.setUser(us);
 		userlog.setModifyDate(new java.sql.Timestamp(new java.util.Date().getTime()));
 		uld.updateLog(userlog);
 	}

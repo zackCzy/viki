@@ -8,7 +8,7 @@ import cn.mini.exception.DaoException;
 import cn.mini.exception.ServiceException;
 
 public interface UserLogService {
-	public void saveLog(UserLog user, int id) throws ServiceException;
+	public void saveLog(UserLog userLog, int id) throws ServiceException;
 
 	public UserBase getUserLogs(int id) throws ServiceException;
 

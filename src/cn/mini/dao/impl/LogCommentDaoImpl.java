@@ -31,10 +31,11 @@ public class LogCommentDaoImpl extends BaseDao implements LogCommentDao {
 			UserLog ul=c.getUserlog();
 			if(c.getUser().getId()!=user.getId()){
 				throw new DaoException("用户权限不够");
+			}else{
+				ul.setCommentNum(ul.getCommentNum()-c.getReviewewCom().size()-1);
+				getSession().update(ul);
+				getSession().delete(c);
 			}
-			ul.setCommentNum(ul.getCommentNum()-1);
-			getSession().update(ul);
-			getSession().delete(c);
 		} catch (Exception e) {
 			throw new DaoException("LogCommentDao-removeLogCom:"+e.getMessage(), e);
 		}
