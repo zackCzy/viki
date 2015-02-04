@@ -151,11 +151,28 @@ public class UserLogDaoImpl extends BaseDao implements UserLogDao {
 		try {			
 			return q.list();
 		} catch (Exception e) {
-			System.out.println(e);
 			throw new DaoException("UserLogDao-getCountDiray:"+e.getMessage(), e);
 		}
 	}
 
+	@Override
+	public List<UserLog> getNoAuthorityADiray(UserBase user, int page, int pageSize)
+			throws DaoException {
+		Query q = getSession().createQuery("from  UserLog as user_log  where user=? and draft=? and rubbish=? and smallSpeak=? and visible=? order by id desc");
+		q.setParameter(0, user);
+		q.setBoolean(1, false);
+		q.setBoolean(2, false);
+		q.setBoolean(3, false);
+		q.setBoolean(4, true);
+		q.setFirstResult((page - 1) * pageSize);
+		q.setMaxResults(pageSize);	
+		try {			
+			return q.list();
+		} catch (Exception e) {
+			throw new DaoException("UserLogDao-getNoAuthorityADiray:"+e.getMessage(), e);
+		}
+	}
+	
 	@Override
 	public Long getCount(UserBase user) throws DaoException {
 		String hql = "SELECT COUNT(*) from UserLog where user=? and draft=? and rubbish=? and smallSpeak=?";

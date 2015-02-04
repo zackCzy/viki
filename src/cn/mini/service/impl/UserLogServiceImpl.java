@@ -158,4 +158,10 @@ public class UserLogServiceImpl implements UserLogService {
 			throws ServiceException {
 		return uld.getNewsFireLog(page, pageSize);
 	}
+
+	@Override
+	public List<UserLog> getNoAuthorityADiray(UserBase user,int page, int pageSize)
+			throws ServiceException {
+		return uld.getNoAuthorityADiray(user, page, pageSize);
+	}
 }

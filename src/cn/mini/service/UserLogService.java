@@ -51,4 +51,5 @@ public interface UserLogService {
 	public  List<UserLog> getFireVisibelLog(int page,int pageSize) throws ServiceException;
 	public List<UserLog> getConFireLog(int page,int pageSize) throws ServiceException;
 	public List<UserLog> getNewsFireLog(int page,int pageSize) throws ServiceException;
+	public List<UserLog> getNoAuthorityADiray(UserBase user,int page,int pageSize) throws ServiceException;
 }

@@ -88,7 +88,7 @@ $(function() {
 	function ajax() {
 		$.ajax({
 			url: BASE_PATH+"/json/content_getContent",
-			method: 'get',
+			type: 'get',
 			dataType: "json",
 			contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			data: {
@@ -127,7 +127,7 @@ function comClick() {
 		var _JQ_load_box = $(".load_box", that).stop(true).show(200);
 		$.ajax({
 			url: BASE_PATH+"/json/com_com",
-			method: 'get',
+			type: 'get',
 			contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			data: {
 				logId: _logId
@@ -295,7 +295,7 @@ function sendReplyCom(type) {
 	var date = new Date();
 	$.ajax({
 		url: BASE_PATH+"/user/comment_saveReviewewComment",
-		method: 'post',
+		type: 'post',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data: {
 			'rc.content': $(that).prev().text().isEmpty(),
@@ -396,7 +396,7 @@ function sendClick() {
 	var date = new Date();
 	$.ajax({
 		url: BASE_PATH+"/user/comment_save",
-		method: 'post',
+		type: 'post',
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data: {
 			'c.content':replyTextE.text().isEmpty(),
@@ -508,7 +508,7 @@ function removeLogT(that) {
 		that.disabled = true;
 		$.ajax({
 			url: BASE_PATH+"/user/function_removeDiary",
-			method: 'get',
+			type: 'get',
 			timeout:5000,
 			contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			data: {
@@ -540,7 +540,7 @@ function removeClick() {
 	that.disabled = true;
 	$.ajax({
 		url: BASE_PATH+"/user/comment_remove",
-		method: 'get',
+		type: 'get',
 		timeout:5000,
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data: {
@@ -583,7 +583,7 @@ function sendSmallSpeak(that) {
 	that.disabled = true;
 	$.ajax({
 		url: BASE_PATH+"/user/function_saveSpeak",
-		method: 'post',
+		type: 'post',
 		timeout:5000,
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 		data: {

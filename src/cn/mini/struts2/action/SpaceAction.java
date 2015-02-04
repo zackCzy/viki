@@ -67,6 +67,14 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				if(verify!=null){
 					return verify;
 				}
+				if(!spaceAuthority){
+					List<UserLog> hostLogs=uls.getFireVisibelLog(0, 5);
+					List<UserLog> conhostLogs=uls.getConFireLog(0, 5);
+					List<UserLog> newhostLogs=uls.getNewsFireLog(0, 5);
+					ActionContext.getContext().put("hostLogs",hostLogs);
+					ActionContext.getContext().put("conhostLogs",conhostLogs);
+					ActionContext.getContext().put("newhostLogs",newhostLogs);	
+				}
 				ActionContext.getContext().put("authority",spaceAuthority ? 1:0);
 				ActionContext.getContext().put("type",1);
 				ActionContext.getContext().put("logcount",uls.getCount(user));	
@@ -88,7 +96,7 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 			String acc;
 			if(m.find()){
 				acc=m.group(1);
-				if(acc.equals("null")){
+				if(acc.equals("null")){//如果访问空间名称为null跳转登录
 					ActionContext.getContext().put("return",requestURI);
 					return "sgin";
 				}
@@ -125,7 +133,7 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				}else{
 					ActionContext.getContext().put("type",1);
 					ActionContext.getContext().put("logcount",uls.getCount(user));	
-					List<UserLog> logListt=uls.getCountDiray(user, 1, 15);
+					List<UserLog> logListt=uls.getNoAuthorityADiray(user, 1, 15);
 					ActionContext.getContext().put("dynamic",logListt);	
 					return "diary";
 				}

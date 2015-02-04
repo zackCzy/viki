@@ -25,4 +25,5 @@ public interface UserLogDao {
 	public List<UserLog> getFireVisibelLog(int page,int pageSize) throws DaoException;
 	public List<UserLog> getConFireLog(int page,int pageSize) throws DaoException;
 	public List<UserLog> getNewsFireLog(int page,int pageSize) throws DaoException;
+	public List<UserLog> getNoAuthorityADiray(UserBase user, int page, int pageSize)throws DaoException; 
 }
