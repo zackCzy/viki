@@ -62,14 +62,19 @@ $(function() {
 				top:"25px"
 			});
 		}
-		if (scrollTop > clientHeight * 2) {
-			$("#returnHead").stop(true).animate({
-				right: "50px"
-			}, 300);
+		$return=$("#returnHead");
+		if (scrollTop > clientHeight * 1.3) {
+			if($return.attr("alt")!="false"){
+				$return.attr("alt","false").stop(true).animate({
+					right: "50px"
+				}, 300);
+			}
 		} else {
-			$("#returnHead").stop(true).animate({
-				right: "-100px"
-			}, 300);
+			if($return.attr("alt")!="true"){
+				$return.attr("alt","true").stop(true).animate({
+					right: "-100px"
+				}, 300);
+			}
 		}
 		if (clientHeight + scrollTop + 50 >= scrollHeight) {
 
@@ -82,7 +87,7 @@ $(function() {
 
 	});
 	$("#returnHead").on("click", function(evt) {
-		$("body", "html").scrollTop(0);
+		$('html,body').animate({scrollTop: '0px'}, 800);
 	});
 
 	function ajax() {
@@ -657,7 +662,7 @@ function createUserCon(json, element) {
 		linkContent = _doc.createElement("a");
 		linkContent.appendChild(logContent);
 		if (json[j]["smallSpeak"] == "false") {
-			linkContent.setAttribute("href", BASE_PATH+"/user/function_readDiary?userId=" + json[j].id);
+			linkContent.setAttribute("href", BASE_PATH+"/user/function_r_readDiary?userId=" + json[j].id);
 		}
 		linkContent.setAttribute("target", "_blank");
 

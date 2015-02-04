@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import cn.mini.domain.Comment;
 import cn.mini.domain.ReviewewComment;
 import cn.mini.domain.UserBase;
-import cn.mini.domain.UserLog;
 import cn.mini.service.LogCommentService;
 import cn.mini.service.ReviewewCommentService;
 import cn.mini.service.UserService;

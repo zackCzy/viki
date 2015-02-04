@@ -78,17 +78,22 @@ public class UserFunctionAction extends ActionSupport {
 		if(ul.getSmallSpeak()){
 			return "my404";
 		}
-		int caller=(Integer) ActionContext.getContext().getSession().get("id");
 		Set<UserBase> visitors=ul.getVisitors();
-		if(caller>0&&caller!=ul.getUser().getId()){				
-			if(visitors.add(us.findUserService(caller))){
-				ul.setVisibleNum(ul.getVisibleNum()+1);
-				uls.updateLogVisitors(ul);
+		try {
+			int caller=(Integer) ActionContext.getContext().getSession().get("id");
+			if(caller>0&&caller!=ul.getUser().getId()){				
+				if(visitors.add(us.findUserService(caller))){
+					ul.setVisibleNum(ul.getVisibleNum()+1);
+					uls.updateLogVisitors(ul);
+				}
+				ActionContext.getContext().put("authority",0);	
+			}else{
+				ActionContext.getContext().put("authority",1);	
 			}
+		} catch (Exception e) {
 			ActionContext.getContext().put("authority",0);	
-		}else{
-			ActionContext.getContext().put("authority",1);	
 		}
+		
 		ActionContext.getContext().put("log",ul);
 		ActionContext.getContext().put("logid",logId);
 		ActionContext.getContext().put("logUser",ul.getUser());
