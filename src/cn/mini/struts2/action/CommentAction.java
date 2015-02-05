@@ -105,9 +105,10 @@ public class CommentAction extends ActionSupport implements ServletResponseAware
 			json.put("userName", rc.getComUser().getUserBaseDatum().getName());	
 			json.put("comUserID", comUser.getId());	
 			json.put("commentId", com.getId());	
-			
+			json.put("account", rc.getComUser().getName());	
 			out.write(json.toString());
 		} catch (Exception e) {
+			System.out.println(e);
 			throw new Exception(e.getMessage(),e);
 		}finally{
 			if(out!=null){
