@@ -7,8 +7,15 @@ public class SpaceDatum {
 	private UserBase user;
 	private String nickName,spacePassWord;
 	@ColumnDefault("false")
-	private Boolean visible=false;
+	private Boolean visible=false,isMusic=true;
 	private Double rank;
+	
+	public Boolean getIsMusic() {
+		return isMusic;
+	}
+	public void setIsMusic(Boolean isMusic) {
+		this.isMusic = isMusic;
+	}
 	public int getId() {
 		return id;
 	}
