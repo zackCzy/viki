@@ -22,10 +22,6 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 		try {
 			String hql="from SpaceDatum where nickName like?";
 			Query q=getSession().createQuery(hql);
-			//String sql="select * from user_base where id=(select user_id from space_datum where nick_name=?)";
-			//SQLQuery  q=getSession().createSQLQuery(sql).addEntity("user_base",UserBase.class);
-			//q.setString(0,name);
-			//Query q=getSession().createQuery("from UserBase where name=?");
 			q.setString(0, "%"+name+"%");
 			q.setFirstResult((page-1)*pageSize);
 			q.setMaxResults(pageSize);
