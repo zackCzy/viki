@@ -1,9 +1,29 @@
 /**
  *
  */
+var img1=new Image();
+img1.src=BASE_PATH+"/image/1.jpg";
+var img2=new Image();
+img2.src=BASE_PATH+"/image/2.jpg";
+var img3=new Image();
+img3.src=BASE_PATH+"/image/3.jpg";
+var images={
+	image:[
+		img1,
+		img2, 
+		img3
+	],
+	height:300,
+	width:"1000",
+	phone:true,
+	autoScale:1000
+};
+
 
 $(function() {
 	var mypage = 1;
+	var rollchart=$.Rollchart();
+	//rollchart.init(images,".mypage_img");
 	
 	$.ajaxSetup({
 		accepts: {
@@ -34,22 +54,24 @@ $(function() {
 		$(".sendComment").on("click", sendClick);
 	} catch (e) {}
 	var home_list_displayHeight=$(".home_list_display").height();
+	var clientWidth = document.documentElement.scrollTop == 0 ? document.body.clientWidth : document.documentElement.clientWidth;
+	if(clientWidth>=1200){
+		$(".Home_page_nav").width(1100).css("left",(clientWidth-1100)/2);
+	}else{
+		$(".Home_page_nav").width("100%").css("left",0);
+	}
+	$(window).resize(function(){
+		var clientWidth = document.documentElement.scrollTop == 0 ? document.body.clientWidth : document.documentElement.clientWidth;
+		if(clientWidth>=1200){
+			$(".Home_page_nav").width(1100).css("left",(clientWidth-1100)/2);
+		}else{
+			$(".Home_page_nav").width("100%").css("left",0);
+		}
+	});
 	$(window).scroll(function() {
 		var clientHeight = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
 		var scrollTop = document.documentElement.scrollTop == 0 ? document.body.scrollTop : document.documentElement.scrollTop;
 		var scrollHeight = document.documentElement.scrollTop == 0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
-		if (scrollTop < 29 && $(".Home_page_nav").css("position") == "fixed") {
-			$(".Home_page_nav").css({
-				position: "",
-				marginTop: "30px"
-			});
-		} else if (scrollTop > 29) {
-			$(".Home_page_nav").css({
-				position: "fixed",
-				top: "0px",
-				marginTop: "0"
-			});
-		}
 		if(scrollTop+home_list_displayHeight-300>$(".home_content_display_wrap").height()){
 			
 		}else if( scrollTop>523){
@@ -66,7 +88,7 @@ $(function() {
 		if (scrollTop > clientHeight * 1.3) {
 			if($return.attr("alt")!="false"){
 				$return.attr("alt","false").stop(true).animate({
-					right: "50px"
+					right: "0px"
 				}, 300);
 			}
 		} else {
@@ -235,12 +257,12 @@ function comClick() {
 						//再次回复
 						reply_area_two = _doc.createElement('div');
 						reply_area_two.className = "small_reply_area";
-						reply_area_two.style.marginLeft = "55px";
-						reply_area_two.style.width = "405px";
+						//reply_area_two.style.marginLeft = "55px";
+						//reply_area_two.style.width = "405px";
 						reply_input = _doc.createElement('div');
 						reply_input.className = "small_reply_input";
 						reply_input.setAttribute("contenteditable", "true");
-						reply_input.style.width = "373px";
+						//reply_input.style.width = "373px";
 						reply_input_bt = _doc.createElement('input');
 						reply_input_bt.setAttribute("type", "button");
 						reply_input_bt.className = "small_reply_bt";
@@ -348,12 +370,12 @@ function sendReplyCom(type) {
 				//再次回复
 				var reply_area_two = document.createElement('div');
 				reply_area_two.className = "small_reply_area";
-				reply_area_two.style.marginLeft = "55px";
-				reply_area_two.style.width = "405px";
+				//reply_area_two.style.marginLeft = "55px";
+				//reply_area_two.style.width = "405px";
 				var reply_input = document.createElement('div');
 				reply_input.className = "small_reply_input";
 				reply_input.setAttribute("contenteditable", "true");
-				reply_input.style.width = "373px";
+				//reply_input.style.width = "373px";
 				var reply_input_bt = document.createElement('input');
 				reply_input_bt.setAttribute("type", "button");
 				reply_input_bt.className = "small_reply_bt";
