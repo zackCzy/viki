@@ -19,6 +19,12 @@ body {
 	box-sizing:border-box;
 	
 }
+.login_area{
+	margin-right:25px;
+	height: 47px;
+    line-height: 49px;
+    margin-right: 25px;
+}
 .user-info{
 font: 20px/30px 'Microsoft Yahei';color: #423009;
 }
@@ -102,19 +108,7 @@ h4{
 	height:25px;
 }
 
-.pro-user-checkbox input {
-	float: left;
-	margin: 1px 3px 0 0;
-}
 
-
-.pro-user-checkbox {
-	clear: both;
-	color: #ECECEC;
-	display: block;
-	font: 12px/1.2em SimSun;
-	margin-left: 35px;
-}
 
 .search_user_i span {
 	background: url('/myHome/images/space/bg_line.png');
@@ -135,9 +129,11 @@ h4{
 }
 .search_user_i input:focus{
 	width:136px;
+	font-size:13px;
 }
 .search_user_i input {
 	margin:0;width:59px;height:20px;float: left;
+	font-size:11.5px;
 	background: #ECECEC;
 	-webkit-transition:width 0.3s ease;
 	-moz-transition:width 0.3s ease;
@@ -313,10 +309,11 @@ h4{
 }
 .home_list_display{
 	height: auto;
-	width: 23%;
+	width: 27%;
 	background: #FCFCFC;
 	position:absolute;
 	right:-0px;
+	top:15px;
 	overflow:hidden;
 	padding:0 15px 0 0px;
 }
@@ -392,16 +389,10 @@ h4{
 	height:180px;
 }
 .home_user_message_left{
-	width:50%;
+	width:80%;
 	float:left;
 }
-.home_user_message_right{
-	width:50%;
-	float:right;
-}
-.home_user_message_right a{
-	display: block;
-}
+
 .home_user_message {
 	width: 100%;
 	height: 130px;;
@@ -412,7 +403,7 @@ h4{
 .home_user_message span {
 	float: left;
 	display: block;
-	width: 70%;
+	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -1154,16 +1145,13 @@ h4{
 		width:80px;
 		height:25px;
 	}
-	.home_user_message,.home_user_message_right,.home_user_message_left{
+	.home_user_message,.home_user_message_left{
 		clear:both;
 		width:100%;
 		padding:0;
 		margin:0;
 		float: inherit;
 		float: none;
-	}
-	.home_user_message_right a{
-		display: inline-block;
 	}
 	.home_user_message{
 		padding:7px 15px 25px;
@@ -1179,9 +1167,6 @@ h4{
 		background:url("/myHome/images/space/nav1.png") 0 6px no-repeat;
 	}
 	.head-nav .nav-box:hover ~ul{
-		height:auto;
-	}
-	.head-nav .nav-box:ACTIVE ~ul{
 		height:auto;
 	}
 	.Home_page_nav ul:hover{
@@ -1214,6 +1199,13 @@ h4{
 	}
 	.user_space_message{
 		padding:8px;
+	}
+	#login_view{
+		width:100%!important;
+		height:100%!important;
+		left:0!important;
+		top:0!important;
+		border-radius:0!important;
 	}
 	
 }

@@ -48,26 +48,28 @@ public class UserFunctionAction extends ActionSupport {
 		this.logId = logId;
 	}
 	public String cteateDiary() {
-		ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
-		ActionContext.getContext().put("diary", "saveDiary");
-		ActionContext.getContext().put("draft", "saveDraft");
-		ActionContext.getContext().put("title", "发布文字");
+		ActionContext ac=ActionContext.getContext();
+		ac.put("token", WebUtils.getToken().replace("+", "/"));
+		ac.put("diary", "saveDiary");
+		ac.put("draft", "saveDraft");
+		ac.put("title", "发布文字");
 		return "cteateDiary";
 	}
 	public String modifyDiary() {
+		ActionContext ac=ActionContext.getContext();
 		UserLog ul=uls.getUserLog(logId);
 		if(ul.getSmallSpeak()){
 			return "my404";
 		}
-		if(ul.getUser().getId()!=(Integer)ActionContext.getContext().getSession().get("id")){
+		if(ul.getUser().getId()!=(Integer)ac.getSession().get("id")){
 			return "my404";
 		}
-		ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
-		ActionContext.getContext().put("title", "修改文字");
-		ActionContext.getContext().put("diary", "updateDiary");
-		ActionContext.getContext().put("draft", "updateDraft");
-		ActionContext.getContext().put("log",ul);
-		ActionContext.getContext().put("logid",logId);
+		ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
+		ac.put("title", "修改文字");
+		ac.put("diary", "updateDiary");
+		ac.put("draft", "updateDraft");
+		ac.put("log",ul);
+		ac.put("logid",logId);
 		return "modifyDiary";
 	}
 	public String readDiary() {
@@ -79,25 +81,32 @@ public class UserFunctionAction extends ActionSupport {
 			return "my404";
 		}
 		Set<UserBase> visitors=ul.getVisitors();
+		int caller=0;
+		ActionContext ac=ActionContext.getContext();
 		try {
-			int caller=(Integer) ActionContext.getContext().getSession().get("id");
-			if(caller>0&&caller!=ul.getUser().getId()){				
+			caller=(Integer) ActionContext.getContext().getSession().get("id");
+		} catch (Exception e) {
+			ac.put("authority",0);	
+		}
+		try {
+			if(caller==0){
+				ul.setVisibleNum(ul.getVisibleNum()+1);
+			}else if(caller!=ul.getUser().getId()){				
 				if(visitors.add(us.findUserService(caller))){
 					ul.setVisibleNum(ul.getVisibleNum()+1);
 					uls.updateLogVisitors(ul);
 				}
-				ActionContext.getContext().put("authority",0);	
 			}else{
-				ActionContext.getContext().put("authority",1);	
+				ac.put("authority",1);	
 			}
 		} catch (Exception e) {
-			ActionContext.getContext().put("authority",0);	
+			System.out.println(e);
+			return "my404";
 		}
-		
-		ActionContext.getContext().put("log",ul);
-		ActionContext.getContext().put("logid",logId);
-		ActionContext.getContext().put("logUser",ul.getUser());
-		ActionContext.getContext().put("visitors",visitors);
+		ac.put("log",ul);
+		ac.put("logid",logId);
+		ac.put("logUser",ul.getUser());
+		ac.put("visitors",visitors);
 		return "readDiary";
 	}
 	public void removeDiary(){

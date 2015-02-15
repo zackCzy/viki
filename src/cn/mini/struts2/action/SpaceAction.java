@@ -43,23 +43,35 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 	UserDatumService uds=null;
 	@Resource(name = "sportNewServiceImpl")
 	private SportNewService uns = null;
-	public String diary(){
+	private String selectRequest(String requestURI){
 		try {
-			String requestURI=request.getRequestURI();
 			Pattern reg= Pattern.compile("/.*?space/(.*?)/");
 			Matcher m=reg.matcher(requestURI);
-			String acc;
 			if(m.find()){
-				acc=m.group(1);
+				return m.group(1);
+			}
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public String diary(){
+		String requestURI=request.getRequestURI();
+		try {
+			String acc=selectRequest(requestURI);
+			ActionContext ac=ActionContext.getContext();		
+			if(acc!=null){
+				
 				if(acc.equals("null")){
-					ActionContext.getContext().put("return",requestURI);
+					ac.put("return",requestURI);
 					return "sgin";
 				}
+				
 				UserBase user=us.findUser(acc);
-				ActionContext.getContext().put("user",user);			
+				ac.put("user",user);			
 				Boolean spaceAuthority=true;
 				try {
-					spaceAuthority=user.getName().equals(ActionContext.getContext().getSession().get("sgin"));
+					spaceAuthority=user.getName().equals(ac.getSession().get("sgin"));
 				} catch (Exception e) {
 					spaceAuthority=false;
 				}
@@ -71,15 +83,15 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 					List<UserLog> hostLogs=uls.getFireVisibelLog(0, 5);
 					List<UserLog> conhostLogs=uls.getConFireLog(0, 5);
 					List<UserLog> newhostLogs=uls.getNewsFireLog(0, 5);
-					ActionContext.getContext().put("hostLogs",hostLogs);
-					ActionContext.getContext().put("conhostLogs",conhostLogs);
-					ActionContext.getContext().put("newhostLogs",newhostLogs);	
+					ac.put("hostLogs",hostLogs);
+					ac.put("conhostLogs",conhostLogs);
+					ac.put("newhostLogs",newhostLogs);	
 				}
-				ActionContext.getContext().put("authority",spaceAuthority ? 1:0);
-				ActionContext.getContext().put("type",1);
-				ActionContext.getContext().put("logcount",uls.getCount(user));	
+				ac.put("authority",spaceAuthority ? 1:0);
+				ac.put("type",1);
+				ac.put("logcount",uls.getCount(user));	
 				List<UserLog> logListt=uls.getCountDiray(user, 1, 15);
-				ActionContext.getContext().put("dynamic",logListt);	
+				ac.put("dynamic",logListt);	
 				return SUCCESS;
 			}
 			return "my404";
@@ -89,52 +101,50 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 	}
 	@Override
 	public String execute() throws Exception {
+		String requestURI=request.getRequestURI();
 		try {
-			String requestURI=request.getRequestURI();
-			Pattern reg= Pattern.compile("/.*?space/(.*?)/");
-			Matcher m=reg.matcher(requestURI);
-			String acc;
-			if(m.find()){
-				acc=m.group(1);
+			String acc=selectRequest(requestURI);
+			ActionContext ac=ActionContext.getContext();
+			if(acc!=null){
 				if(acc.equals("null")){//如果访问空间名称为null跳转登录
-					ActionContext.getContext().put("return",requestURI);
+					ac.put("return",requestURI);
 					return "sgin";
 				}
 				UserBase user=us.findUser(acc);
-				ActionContext.getContext().put("user",user);
+				ac.put("user",user);
 				Boolean spaceAuthority=true;
 				try {
-					spaceAuthority=user.getName().equals(ActionContext.getContext().getSession().get("sgin"));
+					spaceAuthority=user.getName().equals(ac.getSession().get("sgin"));
 				} catch (Exception e) {
 					spaceAuthority=false;
 				}
 				List<UserLog> hostLogs=uls.getFireVisibelLog(0, 5);
 				List<UserLog> conhostLogs=uls.getConFireLog(0, 5);
 				List<UserLog> newhostLogs=uls.getNewsFireLog(0, 5);
-				ActionContext.getContext().put("hostLogs",hostLogs);
-				ActionContext.getContext().put("conhostLogs",conhostLogs);
-				ActionContext.getContext().put("newhostLogs",newhostLogs);	
+				ac.put("hostLogs",hostLogs);
+				ac.put("conhostLogs",conhostLogs);
+				ac.put("newhostLogs",newhostLogs);	
 				String verify=verifyPassword(user,"success",spaceAuthority);			
 				if(verify!=null){
 					return verify;
 				}
-				ActionContext.getContext().put("authority",spaceAuthority ? 1:0);
+				ac.put("authority",spaceAuthority ? 1:0);
 				
 				if(spaceAuthority){
-					ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
-					ActionContext.getContext().put("type",2);
-					ActionContext.getContext().put("logcount",uls.getCount(user));	
+					ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
+					ac.put("type",2);
+					ac.put("logcount",uls.getCount(user));	
 					Set <UserBase> ulogs=user.getFollowUsers();
 					ulogs.add(user);
 					List<UserBase> list=new ArrayList<UserBase>();
 					list.addAll(ulogs);	
 					List<?> logListt=uns.getSpacsSportNewDao(list, 1, 15);
-					ActionContext.getContext().put("dynamic",logListt);	
+					ac.put("dynamic",logListt);	
 				}else{
-					ActionContext.getContext().put("type",1);
-					ActionContext.getContext().put("logcount",uls.getCount(user));	
+					ac.put("type",1);
+					ac.put("logcount",uls.getCount(user));	
 					List<UserLog> logListt=uls.getNoAuthorityADiray(user, 1, 15);
-					ActionContext.getContext().put("dynamic",logListt);	
+					ac.put("dynamic",logListt);	
 					return "diary";
 				}
 				return SUCCESS;
@@ -147,10 +157,11 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 	public String spaceChackAuthority(){
 		UserBase user=us.findUser(spaceName);
 		String possword=uds.getSpaceDatum(user).getSpacePassWord();
-		ActionContext.getContext().put("user",user);
+		ActionContext ac=ActionContext.getContext();
+		ac.put("user",user);
 		if(!possword.equals(spacePossWord)){
 			this.addFieldError("passwordError" , "密码错误");
-			ActionContext.getContext().put("accessPath",accessPath);
+			ac.put("accessPath",accessPath);
 			return "authority";
 		}
 		Cookie c=new Cookie(spaceName+"SpacePassIsOk", "ok");
@@ -159,22 +170,20 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 		return accessPath;
 	}
 	public String datum(){
+		String requestURI=request.getRequestURI();
 		try {
-			String requestURI=request.getRequestURI();
-			Pattern reg= Pattern.compile("/.*?space/(.*?)/");
-			Matcher m=reg.matcher(requestURI);
-			String acc;
-			if(m.find()){
-				acc=m.group(1);
-				if(acc.equals("null")){
-					ActionContext.getContext().put("return",requestURI);
+			String acc=selectRequest(requestURI);
+			ActionContext ac=ActionContext.getContext();
+			if(acc!=null){
+				if(acc.equals("null")){//如果访问空间名称为null跳转登录
+					ac.put("return",requestURI);
 					return "sgin";
 				}
 				UserBase user=us.findUser(acc);
-				ActionContext.getContext().put("user",user);
+				ac.put("user",user);
 				Boolean spaceAuthority=true;
 				try {
-					spaceAuthority=user.getName().equals(ActionContext.getContext().getSession().get("sgin"));
+					spaceAuthority=user.getName().equals(ac.getSession().get("sgin"));
 				} catch (Exception e) {
 					spaceAuthority=false;
 				}		
@@ -182,11 +191,11 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				if(verify!=null){
 					return verify;
 				}
-				ActionContext.getContext().put("authority",spaceAuthority ?1:0);
-				ActionContext.getContext().put("unitDatum",uds.getUnitDatum(user));
-				ActionContext.getContext().put("userBaseDails",uds.getUserBaseDails(user));
-				ActionContext.getContext().put("type",3);
-				ActionContext.getContext().put("logcount",uls.getCount(user));			
+				ac.put("authority",spaceAuthority ?1:0);
+				ac.put("unitDatum",uds.getUnitDatum(user));
+				ac.put("userBaseDails",uds.getUserBaseDails(user));
+				ac.put("type",3);
+				ac.put("logcount",uls.getCount(user));			
 				return SUCCESS;
 			}
 			return "my404";
@@ -195,22 +204,20 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 		}	
 	}
 	public String smallSpeak(){
+		String requestURI=request.getRequestURI();
 		try {
-			String requestURI=request.getRequestURI();
-			Pattern reg= Pattern.compile("/.*?space/(.*?)/");
-			Matcher m=reg.matcher(requestURI);
-			String acc;
-			if(m.find()){
-				acc=m.group(1);
-				if(acc.equals("null")){
-					ActionContext.getContext().put("return",requestURI);
+			String acc=selectRequest(requestURI);
+			ActionContext ac=ActionContext.getContext();
+			if(acc!=null){
+				if(acc.equals("null")){//如果访问空间名称为null跳转登录
+					ac.put("return",requestURI);
 					return "sgin";
 				}
 				UserBase user=us.findUser(acc);
-				ActionContext.getContext().put("user",user);
+				ac.put("user",user);
 				Boolean spaceAuthority=true;
 				try {
-					spaceAuthority=user.getName().equals(ActionContext.getContext().getSession().get("sgin"));
+					spaceAuthority=user.getName().equals(ac.getSession().get("sgin"));
 				} catch (Exception e) {
 					spaceAuthority=false;
 				}
@@ -218,25 +225,25 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				if(verify!=null){
 					return verify;
 				}
-				ActionContext.getContext().put("authority",spaceAuthority ? 1:0);
-				ActionContext.getContext().put("diary",true);
-				ActionContext.getContext().put("user",user);
-				ActionContext.getContext().put("speakCount",uls.getSpeakCount(user));
-				ActionContext.getContext().put("logcount",uls.getCount(user));	
+				ac.put("authority",spaceAuthority ? 1:0);
+				ac.put("diary",true);
+				ac.put("user",user);
+				ac.put("speakCount",uls.getSpeakCount(user));
+				ac.put("logcount",uls.getCount(user));	
 				Calendar cal = Calendar.getInstance();
-				 cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-			     cal.set(Calendar.MONTH,  cal.get(Calendar.MONTH));
-			     cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DATE));
-			     cal.set(Calendar.HOUR_OF_DAY, 0);
-			     cal.set(Calendar.MINUTE, 0);
-			     cal.set(Calendar.SECOND, 0);
-			     cal.set(Calendar.MILLISECOND, 0);
+				cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+			    cal.set(Calendar.MONTH,  cal.get(Calendar.MONTH));
+			    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DATE));
+			    cal.set(Calendar.HOUR_OF_DAY, 0);
+			    cal.set(Calendar.MINUTE, 0);
+			    cal.set(Calendar.SECOND, 0);
+			    cal.set(Calendar.MILLISECOND, 0);
 				Timestamp t=new Timestamp(cal.getTimeInMillis());
-				ActionContext.getContext().put("speakDateCount",uls.getSpeakDateCount(user,t));	
-				ActionContext.getContext().put("type",4);
-				ActionContext.getContext().getSession().put("token", WebUtils.getToken().replace("+", "/"));
+				ac.put("speakDateCount",uls.getSpeakDateCount(user,t));	
+				ac.put("type",4);
+				ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
 				List<UserLog> logListt=uls.getCountSpeak(user, 1, 15);
-				ActionContext.getContext().put("dynamic",logListt);	
+				ac.put("dynamic",logListt);	
 				return SUCCESS;
 			}
 			return "my404";
@@ -257,16 +264,14 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 		return null;
 	}
 	private String getCookie(Cookie [] cookies,String key){
-		try {
-			for (Cookie c:cookies) {
-				if(c.getName().equals(key)){
-					return c.getValue();
-				}
+		String tempKey=null;
+		for (Cookie c:cookies) {
+			if(c.getName().equals(key)){
+				tempKey=c.getValue();
+				break;
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
-		return null;
+		return tempKey;
 	}
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
