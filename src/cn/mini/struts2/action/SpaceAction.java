@@ -265,11 +265,15 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 	}
 	private String getCookie(Cookie [] cookies,String key){
 		String tempKey=null;
-		for (Cookie c:cookies) {
-			if(c.getName().equals(key)){
-				tempKey=c.getValue();
-				break;
+		try {
+			for (Cookie c:cookies) {
+				if(c.getName().equals(key)){
+					tempKey=c.getValue();
+					break;
+				}
 			}
+		} catch (Exception e) {
+			
 		}
 		return tempKey;
 	}
