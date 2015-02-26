@@ -49,7 +49,7 @@ public class UserFunctionAction extends ActionSupport {
 	}
 	public String cteateDiary() {
 		ActionContext ac=ActionContext.getContext();
-		ac.put("token", WebUtils.getToken().replace("+", "/"));
+		ac.getSession().put("logToken", WebUtils.getToken().replace("+", "/"));
 		ac.put("diary", "saveDiary");
 		ac.put("draft", "saveDraft");
 		ac.put("title", "发布文字");
@@ -64,7 +64,7 @@ public class UserFunctionAction extends ActionSupport {
 		if(ul.getUser().getId()!=(Integer)ac.getSession().get("id")){
 			return "my404";
 		}
-		ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
+		ac.getSession().put("logToken", WebUtils.getToken().replace("+", "/"));
 		ac.put("title", "修改文字");
 		ac.put("diary", "updateDiary");
 		ac.put("draft", "updateDraft");
@@ -125,10 +125,6 @@ public class UserFunctionAction extends ActionSupport {
 			if(out!=null){
 				out.write("removeDiary is error");
 			}
-		}finally{
-			if(out!=null){
-				out.close();
-			}
 		}
 	}
 	
@@ -148,10 +144,6 @@ public class UserFunctionAction extends ActionSupport {
 			if(out!=null){
 				out.write("removeRubbish user log error");
 			}
-		}finally{
-			if(out!=null){
-				out.close();
-			}
 		}
 	}
 	public void removeDraft(){
@@ -169,10 +161,6 @@ public class UserFunctionAction extends ActionSupport {
 		} catch (Exception e) {
 			if(out!=null){
 				out.write("removeDraft user log error");
-			}
-		}finally{
-			if(out!=null){
-				out.close();
 			}
 		}
 	}
@@ -192,23 +180,38 @@ public class UserFunctionAction extends ActionSupport {
 			if(out!=null){
 				out.write("recoveryRubbish user log error");
 			}
-		}finally{
-			if(out!=null){
-				out.close();
-			}
 		}
 	}
+	public void saveDiary() {
+		ActionContext ac=ActionContext.getContext();
+		UserLogHandle ulh=new UserLogHandle(ac){
+			public void handleUserLog() throws RuntimeException {
+				super.ac.getSession().remove("logToken");
+				int id = (Integer) super.ac.getSession().get("id");
+				userlog.setDraft(false);
+				uls.saveLog(userlog, id);
+				super.out.write("save user log ok");
+			}	
+		};
+		ulh.initHandle();
+	}	
 //---------------------------------------------------------------------------------------------
 	private abstract class UserLogHandle{
 		public abstract void handleUserLog()throws RuntimeException;
 		private PrintWriter out=null;
+		private ActionContext ac;
+		public UserLogHandle(ActionContext ac){
+			this.ac=ac;
+		}
+		public UserLogHandle(){}
 		public void initHandle(){
 			try {
 				if (userlog.getNoHtmlLog().equals("")) {
 					out.write("save user log error");
 					return;
 				}
-				String setoken = (String) ActionContext.getContext().getSession().get("token");
+				String setoken = (String) ac.getSession().get("logToken");
+
 				if (!token.equals(setoken)) {
 					out.write("save user log error");
 					return;
@@ -220,29 +223,14 @@ public class UserFunctionAction extends ActionSupport {
 				if(out!=null){
 					out.write("save user log error");
 				}
-			}finally{
-				if(out!=null){
-					out.close();
-				}
 			}
 		}
 	}
-	public void saveDiary() {
-		UserLogHandle ulh=new UserLogHandle(){
-			public void handleUserLog() throws RuntimeException {
-				ActionContext.getContext().getSession().remove("token");
-				int id = (Integer) ActionContext.getContext().getSession().get("id");
-				userlog.setDraft(false);
-				uls.saveLog(userlog, id);
-				super.out.write("save user log ok");
-			}	
-		};
-		ulh.initHandle();
-	}	
 	public void updateDiary() {
-		UserLogHandle ulh=new UserLogHandle(){
+		ActionContext ac=ActionContext.getContext();
+		UserLogHandle ulh=new UserLogHandle(ac){
 			public void handleUserLog() throws RuntimeException {
-				ActionContext.getContext().getSession().remove("token");	
+				super.ac.getSession().remove("logToken");	
 				UserLog reUserLog=uls.getUserLog(userlog.getId());
 				reUserLog.setLogName(userlog.getLogName());
 				reUserLog.setLogContent(userlog.getLogContent());
@@ -250,17 +238,18 @@ public class UserFunctionAction extends ActionSupport {
 				reUserLog.setType(userlog.getType());
 				reUserLog.setDraft(false);
 				reUserLog.setNoHtmlLog(userlog.getNoHtmlLog());
-				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), reUserLog);
+				uls.updateLog((Integer)super.ac.getSession().get("id"), reUserLog);
 				super.out.write("save user log ok");
 			}	
 		};
 		ulh.initHandle();
 	}
 	public void saveDraft() {
-		UserLogHandle ulh=new UserLogHandle(){
+		ActionContext ac=ActionContext.getContext();
+		UserLogHandle ulh=new UserLogHandle(ac){
 			public void handleUserLog() throws RuntimeException {
-				ActionContext.getContext().getSession().remove("token");
-				int id = (Integer) ActionContext.getContext().getSession().get("id");
+				super.ac.getSession().remove("logToken");
+				int id = (Integer) super.ac.getSession().get("id");
 				userlog.setDraft(true);
 				uls.saveLog(userlog, id);
 				super.out.write("save user log ok");
@@ -269,9 +258,10 @@ public class UserFunctionAction extends ActionSupport {
 		ulh.initHandle();
 	}	
 	public void updateDraft() {
-		UserLogHandle ulh=new UserLogHandle(){
+		ActionContext ac=ActionContext.getContext();
+		UserLogHandle ulh=new UserLogHandle(ac){
 			public void handleUserLog() throws RuntimeException {
-				ActionContext.getContext().getSession().remove("token");
+				super.ac.getSession().remove("logToken");
 				UserLog reUserLog=uls.getUserLog(userlog.getId());
 				reUserLog.setLogName(userlog.getLogName());
 				reUserLog.setLogContent(userlog.getLogContent());
@@ -279,7 +269,7 @@ public class UserFunctionAction extends ActionSupport {
 				reUserLog.setType(userlog.getType());
 				reUserLog.setDraft(true);
 				reUserLog.setNoHtmlLog(userlog.getNoHtmlLog());
-				uls.updateLog((Integer) ActionContext.getContext().getSession().get("id"), reUserLog);
+				uls.updateLog((Integer) super.ac.getSession().get("id"), reUserLog);
 				super.out.write("save user log ok");
 			}
 		};
@@ -343,10 +333,6 @@ public class UserFunctionAction extends ActionSupport {
 			out.write(array.toString());	
 		} catch (Exception e) {
 			return;
-		}finally{
-			if(out!=null){
-				out.close();
-			}
 		}
 	}
 
