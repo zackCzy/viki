@@ -203,7 +203,6 @@ public class UserFunctionAction extends ActionSupport {
 		public UserLogHandle(ActionContext ac){
 			this.ac=ac;
 		}
-		public UserLogHandle(){}
 		public void initHandle(){
 			try {
 				if (userlog.getNoHtmlLog().equals("")) {
@@ -211,7 +210,9 @@ public class UserFunctionAction extends ActionSupport {
 					return;
 				}
 				String setoken = (String) ac.getSession().get("logToken");
-
+				if(setoken==null){
+					setoken = (String) ac.getSession().get("speakToken");
+				}
 				if (!token.equals(setoken)) {
 					out.write("save user log error");
 					return;
@@ -276,9 +277,10 @@ public class UserFunctionAction extends ActionSupport {
 		ulh.initHandle();
 	}
 	public void saveSpeak() {
-		UserLogHandle ulh=new UserLogHandle(){
+		ActionContext ac=ActionContext.getContext();
+		UserLogHandle ulh=new UserLogHandle(ac){
 			public void handleUserLog() throws RuntimeException {
-				int id = (Integer) ActionContext.getContext().getSession().get("id");
+				int id = (Integer) super.ac.getSession().get("id");
 				userlog.setSmallSpeak(true);
 				uls.saveLog(userlog, id);
 				JsonConfig config=new JsonConfig();

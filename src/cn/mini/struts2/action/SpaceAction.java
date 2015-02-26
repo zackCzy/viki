@@ -131,7 +131,7 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				ac.put("authority",spaceAuthority ? 1:0);
 				
 				if(spaceAuthority){
-					ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
+					ac.getSession().put("speakToken", WebUtils.getToken().replace("+", "/"));
 					ac.put("type",2);
 					ac.put("logcount",uls.getCount(user));	
 					Set <UserBase> ulogs=user.getFollowUsers();
@@ -241,7 +241,7 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 				Timestamp t=new Timestamp(cal.getTimeInMillis());
 				ac.put("speakDateCount",uls.getSpeakDateCount(user,t));	
 				ac.put("type",4);
-				ac.getSession().put("token", WebUtils.getToken().replace("+", "/"));
+				ac.getSession().put("speakToken", WebUtils.getToken().replace("+", "/"));
 				List<UserLog> logListt=uls.getCountSpeak(user, 1, 15);
 				ac.put("dynamic",logListt);	
 				return SUCCESS;
