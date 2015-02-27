@@ -11,161 +11,27 @@
 		<title>Viki_头像上传</title>
 		<link rel="stylesheet" type="text/css"
 			href="csss/imgareaselect-default.css" />
-		<script type="text/javascript" src="scripts/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.10.1.js"></script>
 		<script type="text/javascript"
 			src="scripts/jquery.imgareaselect.pack.js"></script>
 		<script type="text/javascript" src="scripts/jQueryRotate.js"></script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/span.js"></script>
 		<script type="text/javascript" src="<%=path%>/JS/tool/ajaxfileupload.js"></script>
-		<script type="text/javascript" src="<%=path%>/JS/tool/Ajax.js"></script>
-		<style>
-.portrait_left {
-	float: left;
-	height: auto;
-	width: 306px;
-}
-
-#avatar {
-	height: 280px;
-}
-
-.portrait_revolve {
-	height: auto;
-	padding-top: 15px;
-	width: 306px;
-}
-
-.revolve_left {
-	background: url("images/setup.gif") repeat scroll -128px -55px
-		rgba(0, 0, 0, 0);
-	float: left;
-	height: 22px;
-	width: 22px;
-}
-
-.revol_left_txt {
-	color: #FF6699;
-	float: left;
-	height: 22px;
-	line-height: 22px;
-	text-align: left;
-	width: 110px;
-}
-
-.revol_left_txt {
-	color: #FF6699;
-	float: left;
-	height: 22px;
-	line-height: 22px;
-	text-align: left;
-	width: 110px;
-}
-
-.revol_right_txt {
-	color: #FF6699;
-	float: left;
-	height: 22px;
-	line-height: 22px;
-	text-align: right;
-	width: 131px;
-}
-
-.revolve_right {
-	background: url("images/setup.gif") repeat scroll -128px -77px
-		rgba(0, 0, 0, 0);
-	float: left;
-	height: 22px;
-	width: 22px;
-}
-
-
-.portrait_right {
-	float: left;
-	font-size: 12px;
-	height: 280px;
-	padding-left: 80px;
-	width: 320px;
-}
-
-.portrait_right_bottom {
-	color: #666666;
-	height: 220px;
-	width: 310px;
-}
-
-.portrait1 {
-	float: left;
-	height: 200px;
-	width: 180px;
-}
-
-#img_big_preview {
-	height: 180px;
-	margin: 0 auto;
-	width: 180px;
-}
-
-.img_preview {
-	border: 1px solid #000000;
-	overflow: hidden;
-	position: relative;
-}
-
-.img_preview img {
-	margin: 0;
-	position: relative;
-}
-
-.portrait2 {
-	float: left;
-	height: auto;
-	padding-left: 40px;
-	width: 68px;
-}
-
-#img_small_preview {
-	height: 49px;
-	margin: 0 auto;
-	width: 49px;
-}
-
-.img_preview {
-	border: 1px solid #000000;
-	overflow: hidden;
-	position: relative;
-}
-.btn-choose-file{
-    overflow: hidden;
-    text-decoration: none;
-    border: medium none;
-    outline: medium none;
-    display: block;
-    float: right;
-    text-align: center;
-    background: url("images/secondary.gif") repeat scroll -194px -96px rgba(0, 0, 0, 0);
-	height: 28px;
-	line-height: 28px;
-	color: #FFFFFF;
-	font-size: 14px;
-	font-weight: bold;
-	width: 78px;
-}
-</style>
 	</head>
 	<body>
 
 		<div class="portrait_left">
 			<div id="picture"
 				style="border: 1px solid #000000; overflow: hidden; position: relative; height: auto; width: 280px; margin: 0 auto;">
-				<img id="avatar" width="280" alt="请上传头像" src="<%=path%>/load/download_downloadPhoto?id=${id}">
+				<img id="avatar" width="280" alt="请上传头像" src="<%=path%>/load/download_downloadPhoto?id=${id}" />
 			</div>
 			<form name="photoSize" method="post" action="<%=path%>/load/download_uploadUserPhoto" enctype="multipart/form-data"  target="hidden_frame">
 				<!--通过生成尺寸和旋转角度 后台获取尺寸和旋转角度再进行裁剪-->
-				<input id="id_top" type="hidden" name="top" value="90">
-				<input id="id_left" type="hidden" name="left" value="61">
-				<input id="id_right" type="hidden" name="right" value="201">
-				<input id="id_bottom" type="hidden" name="bottom" value="200">
-				<input id="rotation" type="hidden" value="0" name="rotation">
+				<input id="id_top" type="hidden" name="top" value="90" />
+				<input id="id_left" type="hidden" name="left" value="61" />
+				<input id="id_right" type="hidden" name="right" value="201" />
+				<input id="id_bottom" type="hidden" name="bottom" value="200" />
+				<input id="rotation" type="hidden" value="0" name="rotation" />
 			</form>
 			<div class="portrait_revolve">
 				<div class="revolve_left"></div>
@@ -190,7 +56,7 @@
 				<div class="portrait1">
 					<div id="img_big_preview" class="img_preview">
 						<img id="avatar1" alt="头像预览" src="<%=path%>/load/download_downloadPhoto?id=${id}"
-							style="width: 360px; height: 360px; margin-left: -117px; margin-top: -44px;">
+							style="width: 360px; height: 360px; margin-left: -117px; margin-top: -44px;"/>
 					</div>
 					<p>
 						大尺寸头像，180×180
@@ -200,7 +66,7 @@
 			<div class="portrait2">
 				<div id="img_small_preview" class="img_preview">
 					<img id="avatar2" alt="预览" src="<%=path%>/load/download_downloadPhoto?id=${id}"
-						style="width: 98px; height: 98px; margin-left: -32px; margin-top: -12px;">
+						style="width: 98px; height: 98px; margin-left: -32px; margin-top: -12px;"/>
 				</div>
 				<p>
 					中尺寸头像
@@ -216,7 +82,7 @@
 		var fileName=node.value.toUpperCase()
 		var isUpload=fileName.endsWith('.JPG')? true:fileName.endsWith('.PNG') ? true :fileName.endsWith('.GIF') ? true:false;	
 		if(isUpload){
-			if(fileSize>65000){
+			if(fileSize>100000){
 				alert("不支持");
 			}else{
 				ajaxFileUpload();
@@ -305,20 +171,19 @@
 		$('#avatar_form').submit();
 	}
 	function submit_avatar() {
-		
 		$('#rotation').val(value);
-		stateAjax({
+		$.ajax({
 			url:'<%=path%>/load/download_saveUserPhoto',
-			method : 'get',
-			async : true,
-			message : {
+			type : 'get',
+			data : {
 				top:document.forms['photoSize']['top'].value,
 				left:document.forms['photoSize'].left.value,
 				bottom:document.forms['photoSize'].bottom.value,
 				right:document.forms['photoSize'].right.value,
 				rotation:document.forms['photoSize'].rotation.value
 			},
-			run:function(text){
+			success:function(text){
+			
 			}
 		});
 	}
