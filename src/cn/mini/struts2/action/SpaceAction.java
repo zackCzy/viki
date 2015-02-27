@@ -135,8 +135,8 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 					ac.put("type",2);
 					ac.put("logcount",uls.getCount(user));	
 					Set <UserBase> ulogs=user.getFollowUsers();
-					ulogs.add(user);
 					List<UserBase> list=new ArrayList<UserBase>();
+					list.add(user);
 					list.addAll(ulogs);	
 					List<?> logListt=uns.getSpacsSportNewDao(list, 1, 15);
 					ac.put("dynamic",logListt);	
@@ -152,7 +152,7 @@ public class SpaceAction extends ActionSupport implements ServletRequestAware{
 			return "my404";
 		} catch (Exception e) {
 			return "my404";
-		}	
+		}
 	}
 	public String spaceChackAuthority(){
 		UserBase user=us.findUser(spaceName);
