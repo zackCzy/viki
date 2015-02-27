@@ -1,4 +1,4 @@
-package cn.mini.factory;
+package temp;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -10,9 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import temp.MyBeanFactory;
+
 import cn.mini.dao.impl.UserDaoImpl;
 import cn.mini.domain.UserBase;
-import cn.mini.factory.MyBeanFactory;
 
 
 public class RegisterServlet extends HttpServlet {

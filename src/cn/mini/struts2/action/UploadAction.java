@@ -69,13 +69,11 @@ public class UploadAction extends ActionSupport {
 		UserPhoto up = ups.getUserPhoto(user);
 		ServletActionContext.getResponse().setContentType(contentType);
 		PrintWriter out = null;
-		System.out.println("123");
 		try {
 			if(up!=null){
 				DrawPhoto d = new DrawPhoto();
 				InputStream is = up.getTempPhoto().getBinaryStream();
 				d.loadImg(is);
-			    //up.setPosition(left + "," + top + "," + right + ","+ bottom + "," + rotation);
 				up.setPosition(imgsize);
 				ups.saveUserPhoto(up,
 						d.drawBigRect(left, top, right, bottom, 180, 180),
