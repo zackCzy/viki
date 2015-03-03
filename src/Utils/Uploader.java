@@ -77,43 +77,6 @@ public class Uploader {
 			Streams.copy(fs, output, true);
 			this.state=this.errorInfo.get("SUCCESS");
 			this.size = file.length();
-			
-//			while ((fs.read(b))!=-1&& (n > 0)) {
-//				dff.write(b);
-//				if (!fis.isFormField()) {
-//					this.originalName = fis.getName().substring(fis.getName().lastIndexOf(System.getProperty("file.separator")) + 1);
-//					if (!this.checkFileType(this.originalName)) {
-//						this.state = this.errorInfo.get("TYPE");
-//						continue;
-//					}
-//					this.fileName = this.getName(this.originalName);
-//					this.type = this.getFileExt(this.fileName);
-//					this.url = savePath + "/" + this.fileName;
-//					BufferedInputStream in = new BufferedInputStream(fis.openStream());
-//					File file = new File(this.getPhysicalPath(this.url));
-//					FileOutputStream out = new FileOutputStream( file );
-//					BufferedOutputStream output = new BufferedOutputStream(out);
-//					Streams.copy(in, output, true);
-//					this.state=this.errorInfo.get("SUCCESS");
-//					this.size = file.length();
-//					//UE中只会处理单张上传，完成后即退出
-//					break;
-//				} else {
-//					String fname = fis.getFieldName();
-//					//只处理title，其余表单请自行处理
-//					if(!fname.equals("pictitle")){
-//						continue;
-//					}
-//                    BufferedInputStream in = new BufferedInputStream(fis.openStream());
-//                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//                    StringBuffer result = new StringBuffer();  
-//                    while (reader.ready()) {  
-//                        result.append((char)reader.read());  
-//                    }
-//                    this.title = new String(result.toString().getBytes(),"utf-8");
-//                    reader.close();  
-//				}
-//}
 		} catch (Exception e) {
 			this.state = this.errorInfo.get("UNKNOWN");
 		}finally{
