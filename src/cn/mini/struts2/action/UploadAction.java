@@ -5,13 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.springframework.stereotype.Controller;
 
 import Utils.DrawPhoto;
+import Utils.Uploader;
 import cn.mini.domain.UserBase;
 import cn.mini.domain.UserPhoto;
 import cn.mini.service.UserPhotoService;
@@ -20,37 +25,73 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Controller("uploadAction")
-public class UploadAction extends ActionSupport {
+public class UploadAction extends ActionSupport implements ServletRequestAware,ServletResponseAware{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String contentType = "text/html;charset=utf-8";
-	private File myFile;
+	private File upfile;
+	public File getUpfile() {
+		return upfile;
+	}
+	public void setUpfile(File upfile) {
+		this.upfile = upfile;
+	}
 	private int top, left, right, bottom, rotation;
 	private String imgsize;
 	@Resource(name = "userPhotoServiceImpl")
 	private UserPhotoService ups = null;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	public void uploadEdit(){
+		
+		try {
+			Uploader up = new Uploader(upfile,request);
+			
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+		    up.setSavePath("upload");
+		    String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp"};
+		    up.setAllowFiles(fileType);
+		    up.setMaxSize(10000); //单位KB
+		    up.upload();
+		    
+		    String callback = request.getParameter("callback");
+		    String result = "{\"name\":\""+ up.getFileName()+".png" +"\", \"originalName\": \""+ up.getOriginalName() +"\", \"size\": "+ up.getSize() +", \"state\": \""+ up.getState() +"\", \"type\": \""+ up.getType() +"\", \"url\": \""+ up.getUrl() +"\"}";
+		    result = result.replaceAll( "\\\\", "\\\\" );
+		    result = result.replaceAll( "\\\\", "\\\\" );
+		    if( callback == null ){
+		        response.getWriter().print( result );
+		    }else{
+		        response.getWriter().print("<script>"+ callback +"(" + result + ")</script>");
+		    }
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {		
+			e.printStackTrace();
+		}
+	}
 	public void uploadUserPhoto() {
-		ServletActionContext.getResponse().setContentType(contentType);
+		response.setContentType(contentType);
 		PrintWriter out = null;
 		try {
 			int userid=(Integer) ActionContext.getContext().getSession().get("id");
 			UserBase user=new UserBase();
 			user.setId(userid);
-			FileInputStream fs=new FileInputStream(myFile);
+			FileInputStream fs=new FileInputStream(upfile);
 			if(ups.getUserPhoto(user)==null){				
 				ups.saveTempUserPhoto(userid, fs);
 			}else {
 				ups.updateTempUserPhoto(userid, fs);
 			}
 			
-			out = ServletActionContext.getResponse().getWriter();
+			out = response.getWriter();
 			out.print("{'id':'"+ userid+ "'}");
 		} catch (Exception e) {
 			System.out.println(e);
 			try {
-				out = ServletActionContext.getResponse().getWriter();
+				out = response.getWriter();
 				out.print("{error:userPhoto is exist}");
 			} catch (IOException e1) {
 			}
@@ -67,7 +108,7 @@ public class UploadAction extends ActionSupport {
 		UserBase user=new UserBase();
 		user.setId(upId);
 		UserPhoto up = ups.getUserPhoto(user);
-		ServletActionContext.getResponse().setContentType(contentType);
+		response.setContentType(contentType);
 		PrintWriter out = null;
 		try {
 			if(up!=null){
@@ -78,7 +119,7 @@ public class UploadAction extends ActionSupport {
 				ups.saveUserPhoto(up,
 						d.drawBigRect(left, top, right, bottom, 180, 180),
 						d.drawBigRect(left, top, right, bottom, 50, 50));
-				out = ServletActionContext.getResponse().getWriter();
+				out = response.getWriter();
 				out.print("{'save':'ok'}");
 			}
 		} catch (Exception e) {
@@ -94,12 +135,6 @@ public class UploadAction extends ActionSupport {
 	}
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
-	}
-	public File getMyFile() {
-		return myFile;
-	}
-	public void setMyFile(File myFile) {
-		this.myFile = myFile;
 	}
 	public int getTop() {
 		return top;
@@ -136,6 +171,16 @@ public class UploadAction extends ActionSupport {
 	}
 	public void setImgsize(String imgsize) {
 		this.imgsize = imgsize;
+	}
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+		
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request=request;
+		
 	}
 	
 

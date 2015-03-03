@@ -1,10 +1,22 @@
 @CHARSET "UTF-8";
+body,hr,h1,h2,h3,h4,h5,h6,h7,ul,li,ol,img{
+	margin:0;
+	padding:0;
+	border:0;
+}
 body{
 	background:url("/myHome/image/bg_noise.jpg");
 	padding:0;
 	margin:0;
 	border:0 none;
-
+	font-family: Tahoma,Helvetica,"Microsoft Yahei",”微软雅黑”,arial;
+}
+.wordContent{
+	width:1024px;height:auto;margin:100px auto 0;
+	background: #FFFFFF;
+	padding:15px 8px;
+	box-sizing:border-box;
+	border:1px solid #D4D4D4;
 }
 .messagePanel {
 	width: 983px;
@@ -22,9 +34,7 @@ body{
 }
 #title {
 	height: 38px;
-	width: 881px;
-	margin: 30px 51px 4px;
-	 font-family: Tahoma,Helvetica,"Microsoft Yahei",”微软雅黑”,arial;
+	width: 100%;
 	word-break: break-all;
     word-wrap: break-word;
     color: #999;
@@ -48,6 +58,7 @@ body{
 	width: 983px;
 	margin: 0 auto 50px;
 	clear: both;
+	padding-bottom:25px;
 }
 .sendText input {
 	height: 40px;
@@ -186,6 +197,7 @@ body{
 .setting {
 	width: 600px;
 	height: 55px;
+	padding-top:25px;
 }
 
 #type {
@@ -254,3 +266,9 @@ body{
 text-decoration: underline;font-weight:bold;
 }
 .trimColor{}
+.edui-container{
+	margin:0 auto;
+}
+input{
+	border:0 auto;
+}
