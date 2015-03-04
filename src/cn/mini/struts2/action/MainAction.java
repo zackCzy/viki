@@ -18,7 +18,6 @@ public class MainAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 
 	public String home() {
-
 		return "home";
 	}
 	public String sgin() {
