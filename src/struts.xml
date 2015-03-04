@@ -155,7 +155,7 @@
 			<result name="readDiary">/WEB-INF/jsp/readDiary.jsp</result>
 			<result name="noDiary">/WEB-INF/cueJsp/noDiary.jsp</result>	
 			<result name="cteateDiary">/WEB-INF/jsp/uedit.jsp</result>
-			<result name="modifyDiary">/WEB-INF/jsp/MessageBoard.jsp</result>
+			<result name="modifyDiary">/WEB-INF/jsp/uedit.jsp</result>
 			<!-- 
 			<result name="removeDiary" type="redirectAction">
 				<param name="actionName">user_space</param>

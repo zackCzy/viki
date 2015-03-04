@@ -7,50 +7,53 @@ $(function(){
 
 	    function createEditor() {
 	        enableBtn();
-	        UM.getEditor('myEditor');
 	    }
 	    function getAllHtml() {
-	        alert(UM.getEditor('myEditor').getAllHtml())
+	        return ue.getAllHtml();
 	    }
 	    function getContent() {
-	        return UM.getEditor('myEditor').getContent();
+	        return ue.getContent();
 	    }
 	    function getPlainTxt() {
-	        return UM.getEditor('myEditor').getPlainTxt();
+	        return ue.getPlainTxt();
 	    }
-	    function setContent(isAppendTo) {
-	        //使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容
-	        UM.getEditor('myEditor').setContent('欢迎使用ueditor', isAppendTo); 
+	    function setContent(content,isAppendTo) {
+	    	ue.setContent(content, isAppendTo); 
 	    }
 	    function setDisabled() {
-	        UM.getEditor('myEditor').setDisabled('fullscreen');
+	    	ue.setDisabled('fullscreen');
 	        disableBtn("enable");
 	    }
 
 	    function setEnabled() {
-	        UM.getEditor('myEditor').setEnabled();
+	    	ue.setEnabled();
 	        enableBtn();
 	    }
 
 	    function getContentTxt() {
 	        //使用editor.getContentTxt()方法可以获得编辑器的纯文本内容
-	        return UM.getEditor('myEditor').getContentTxt();
+	        return ue('myEditor').getContentTxt();
 	    }
 	    function hasContent() {
-	    	return UM.getEditor('myEditor').hasContents();
+	    	return ue.hasContents();
 	    }
 	    function setFocus() {
-	        UM.getEditor('myEditor').focus();
+	    	ue.focus();
 	    }
 	    function deleteEditor() {
 	        disableBtn();
-	        UM.getEditor('myEditor').destroy();
+	        ue.destroy();
 	    }
-
+	    function insertHtml(content) {
+	        var value = prompt(content, '');
+	        ue.execCommand('insertHtml', value);
+	    }
 	    function getLocalData () {
-	        alert(UM.getEditor('myEditor').execCommand( "getlocaldata" ));
+	        return ue.execCommand( "getlocaldata" );
 	    }
-
+	    if(LOG!=null){
+	    	setContent(LOG);
+	    }
 	    sendDiary=function (draft,evt,url_u){
 	    	if(!hasContent()){			
 	    		$.notice("viki提醒您！","文章内容不能为空");
@@ -82,7 +85,7 @@ $(function(){
 	    			}
 	    		}
 	    	});	
-	    }
+	    };
 	    $(".select").on("click", function(evt){	
 			var temp=$("ul",this);		
 			if(temp.css("display")=="none"){
@@ -98,14 +101,4 @@ $(function(){
 		}, function(){
 			this.style.border="1px solid #CCCCCC";
 		});
-	    $(".select ul li").on("click", clickSelect);
 });
-
-function clickSelect() {
-	$(this.parentNode).prev().html(this.innerHTML);
-	try {
-		window.iframeDocument.execCommand(this.parentNode.parentNode.id, false,this.getAttribute("title"));
-	} catch (e) {}
-	
-	$(this.parentNode).hide(300);
-}
