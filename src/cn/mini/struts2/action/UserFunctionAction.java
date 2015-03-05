@@ -88,6 +88,11 @@ public class UserFunctionAction extends ActionSupport {
 		} catch (Exception e) {
 			ac.put("authority",0);	
 		}
+		if(!ul.getVisible()){
+			if(caller==0||ul.getUser().getId()!=caller){
+				return "my404";
+			}
+		}
 		try {
 			if(caller==0){
 				ul.setVisibleNum(ul.getVisibleNum()+1);
@@ -119,7 +124,7 @@ public class UserFunctionAction extends ActionSupport {
 				out.write("removeDiary is error");
 				return;
 			}
-			uls.removeUserLog(userId);
+			uls.removeUserLog(userlog);
 			out.write("removeDiary is ok");
 		} catch (Exception e) {
 			if(out!=null){
@@ -138,7 +143,7 @@ public class UserFunctionAction extends ActionSupport {
 				out.write("removeRubbish user log error");
 				return;
 			}
-			uls.removeRubbishUserLog(logId);
+			uls.removeRubbishUserLog(userlog);
 			out.write("removeRubbish user log ok");
 		} catch (Exception e) {
 			if(out!=null){
@@ -156,7 +161,7 @@ public class UserFunctionAction extends ActionSupport {
 				out.write("removeDraft user log error");
 				return;
 			}
-			uls.removeUserLog(logId);
+			uls.removeUserLog(userlog);
 			out.write("removeDraft user log ok");
 		} catch (Exception e) {
 			if(out!=null){

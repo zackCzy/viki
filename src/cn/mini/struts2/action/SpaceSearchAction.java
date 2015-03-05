@@ -34,9 +34,9 @@ public class SpaceSearchAction extends ActionSupport {
 			Properties p = new Properties();
 			InputStream in=null;
 			try {
-				in=UserCheckAction.class.getClassLoader().getResourceAsStream("../config/register.properties");
+				in=UserCheckAction.class.getClassLoader().getResourceAsStream("../config/config.properties");
 				p .load(in);
-				USER_PATH  =p.getProperty("emailURL");		
+				USER_PATH  =p.getProperty("SPACE_USER_URL");		
 			} catch (IOException e) {
 				System.out.println("getUSER_PATH:"+e);
 			}finally{

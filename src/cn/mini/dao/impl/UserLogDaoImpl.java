@@ -57,18 +57,7 @@ public class UserLogDaoImpl extends BaseDao implements UserLogDao {
 		}
 	}
 
-	@Override
-	public void removeUserLog(int id) throws DaoException {
-		try {
-			UserLog userl = (UserLog) getSession().get(UserLog.class, id);
-			userl.setRubbish(true);
-			userl.setModifyDate(new Timestamp(new java.util.Date().getTime()));
-			getSession().update(userl);
-		} catch (Exception e) {
-			throw new DaoException("UserLogDao-removeUserLog:"+e.getMessage(), e);
-		}
-
-	}
+	
 
 	@Override
 	public List<UserLog> getDiray(UserBase user) throws DaoException {
@@ -289,6 +278,40 @@ public class UserLogDaoImpl extends BaseDao implements UserLogDao {
 			return q.list();
 		} catch (Exception e) {
 			throw new DaoException("UserLogDao-getNewsFireLog:"+e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public void removeUserLog(UserLog log) throws DaoException {
+		try {
+			UserLog userl =log;
+			userl.setRubbish(true);
+			userl.setModifyDate(new Timestamp(new java.util.Date().getTime()));
+			getSession().update(userl);
+		} catch (Exception e) {
+			throw new DaoException("UserLogDao-removeUserLog:"+e.getMessage(), e);
+		}
+	}
+	
+	@Override
+	public void removeUserLog(int id) throws DaoException {
+		try {
+			UserLog userl = (UserLog) getSession().get(UserLog.class, id);
+			userl.setRubbish(true);
+			userl.setModifyDate(new Timestamp(new java.util.Date().getTime()));
+			getSession().update(userl);
+		} catch (Exception e) {
+			throw new DaoException("UserLogDao-removeUserLog:"+e.getMessage(), e);
+		}
+
+	}
+
+	@Override
+	public void removeRubbishUserLog(UserLog log) throws DaoException {
+		try {
+			getSession().delete(log);
+		} catch (Exception e) {
+			throw new DaoException("UserLogDao-removeRubbishUserLog:"+e.getMessage(), e);
 		}
 	}
 }

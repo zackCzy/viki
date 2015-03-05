@@ -105,8 +105,8 @@ public class JsonComAction extends ActionSupport {
 		if(newSport==2&&(Integer)ActionContext.getContext().getSession().get("id")==userId){
 			UserBase user=us.findUserService(userId);	
 			Set <UserBase> ulogs=user.getFollowUsers();
-			ulogs.add(user);
 			List<UserBase> list=new ArrayList<UserBase>();
+			list.add(user);
 			list.addAll(ulogs);	
 			logListt=uns.getSpacsSportNewDao(list, page, 15);
 		}else if(newSport==4){

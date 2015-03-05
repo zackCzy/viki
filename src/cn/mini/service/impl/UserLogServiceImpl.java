@@ -161,4 +161,15 @@ public class UserLogServiceImpl implements UserLogService {
 			throws ServiceException {
 		return uld.getNoAuthorityADiray(user, page, pageSize);
 	}
+
+	@Override
+	public void removeUserLog(UserLog log) throws ServiceException {
+		uld.removeUserLog(log);
+		
+	}
+
+	@Override
+	public void removeRubbishUserLog(UserLog log) throws ServiceException {
+		uld.removeRubbishUserLog(log);
+	}
 }

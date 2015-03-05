@@ -56,14 +56,13 @@ public class SpaceSearchDaoImpl extends BaseDao implements SpaceSearchDao {
 	public List<UserLog> searchSmallSpeak(String logName, int page, int pageSize)
 			throws DaoException {
 		try {
-			String hql="from UserLog where logName like? or noHtmlLog like? and draft=? and rubbish=? and smallSpeak=? and visible=?";
+			String hql="from UserLog where noHtmlLog like ? and draft=? and rubbish=? and smallSpeak=? and visible=? order by id desc";
 			Query q=getSession().createQuery(hql);
 			q.setString(0,"%"+logName+"%");
-			q.setString(1,"%"+logName+"%");
+			q.setBoolean(1, false);
 			q.setBoolean(2, false);
-			q.setBoolean(3, false);
+			q.setBoolean(3, true);
 			q.setBoolean(4, true);
-			q.setBoolean(5, true);
 			q.setFirstResult((page-1)*pageSize);
 			q.setMaxResults(pageSize);
 			return q.list();

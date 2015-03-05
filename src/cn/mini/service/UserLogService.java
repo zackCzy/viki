@@ -17,9 +17,10 @@ public interface UserLogService {
 	public UserLog getUserLog(int id) throws ServiceException;
 
 	public void removeUserLog(int id) throws ServiceException;
+	public void removeUserLog(UserLog log) throws ServiceException;
 
 	public void removeRubbishUserLog(int id) throws ServiceException;
-
+	public void removeRubbishUserLog(UserLog log) throws ServiceException;
 	public UserBase getDiray(int id) throws ServiceException;
 
 	public UserBase getDiray(UserBase us) throws ServiceException;

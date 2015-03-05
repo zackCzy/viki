@@ -12,7 +12,9 @@ public interface UserLogDao {
 	public void updateLog(UserLog userlog) throws DaoException;
 	public UserLog getUserLog(int id)  throws DaoException;
 	public void removeUserLog(int id)  throws DaoException;
+	public void removeUserLog(UserLog log)  throws DaoException;
 	public void removeRubbishUserLog(int id)  throws DaoException;
+	public void removeRubbishUserLog(UserLog log)  throws DaoException;
 	public List<UserLog> getDiray(UserBase user)  throws DaoException;
 	public List<UserLog> getDraft(UserBase user)  throws DaoException;
 	public List<UserLog> getRubbish(UserBase user)  throws DaoException;
