@@ -49,14 +49,13 @@ public class SpaceSearchAction extends ActionSupport {
 	}
 	public String user(){
 		try {
+			ActionContext.getContext().put("type", "找人");
 			List<UserBase> users=sss.searchUser(searchName, page, pageSize);
 			ActionContext.getContext().put("searchCount", sss.searchUserCount(searchName));
 			ActionContext.getContext().put("searchName", searchName);
 			ActionContext.getContext().put("USER_PATH", USER_PATH);
 			ActionContext.getContext().put("users", users);
-			ActionContext.getContext().put("type", "找人");
 		} catch (Exception e) {
-			ActionContext.getContext().put("type", "找人");
 			System.out.println(e);
 		}
 		
@@ -64,27 +63,24 @@ public class SpaceSearchAction extends ActionSupport {
 	}
 	public String log(){
 		try {
-			
+			ActionContext.getContext().put("type", "博客");
 			List<UserLog> logs=sss.searchLog(searchName, page, pageSize);
 			ActionContext.getContext().put("searchCount", sss.searchLogCount(searchName));
 			ActionContext.getContext().put("searchName", searchName);
-			ActionContext.getContext().put("logs", logs);
-			ActionContext.getContext().put("type", "博客");
+			ActionContext.getContext().put("logs", logs);	
 		} catch (Exception e) {
-			ActionContext.getContext().put("type", "博客");
 			System.out.println(e);
 		}	
 		return SUCCESS;
 	}
 	public String smallSpeak(){
 		try {
+			ActionContext.getContext().put("type", "V说");
 			List<UserLog> logs=sss.searchSmallSpeak(searchName, page, pageSize);
 			ActionContext.getContext().put("searchCount", sss.searchSmallSpeakCount(searchName));
 			ActionContext.getContext().put("searchName", searchName);
 			ActionContext.getContext().put("smallSpeaks", logs);
-			ActionContext.getContext().put("type", "V说");
 		} catch (Exception e) {
-			ActionContext.getContext().put("type", "V说");
 			System.out.println(e);
 		}	
 		return SUCCESS;
